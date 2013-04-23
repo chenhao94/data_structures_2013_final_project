@@ -1,0 +1,250 @@
+\begin{theindex}
+
+  \item {$\sim $\discretionary {-}{}{}Array\discretionary {-}{}{}List}
+    \subitem {Array\discretionary {-}{}{}List}, \hyperpage{6}
+  \item {$\sim $\discretionary {-}{}{}Hash\discretionary {-}{}{}Map}
+    \subitem {Hash\discretionary {-}{}{}Map}, \hyperpage{9}
+  \item {$\sim $\discretionary {-}{}{}Linked\discretionary {-}{}{}List}
+    \subitem {Linked\discretionary {-}{}{}List}, \hyperpage{14}
+  \item {$\sim $\discretionary {-}{}{}Tree\discretionary {-}{}{}Map}
+    \subitem {Tree\discretionary {-}{}{}Map}, \hyperpage{17}
+
+  \indexspace
+
+  \item {add}
+    \subitem {Array\discretionary {-}{}{}List}, \hyperpage{6}
+    \subitem {Linked\discretionary {-}{}{}List}, \hyperpage{14}
+  \item {add\discretionary {-}{}{}First}
+    \subitem {Linked\discretionary {-}{}{}List}, \hyperpage{14}
+  \item {add\discretionary {-}{}{}Last}
+    \subitem {Linked\discretionary {-}{}{}List}, \hyperpage{14}
+  \item {Array\discretionary {-}{}{}List}
+    \subitem {$\sim $\discretionary {-}{}{}Array\discretionary {-}{}{}List}, 
+		\hyperpage{6}
+    \subitem {add}, \hyperpage{6}
+    \subitem {Array\discretionary {-}{}{}List}, \hyperpage{6}
+    \subitem {Array\discretionary {-}{}{}List}, \hyperpage{6}
+    \subitem {clear}, \hyperpage{6}
+    \subitem {contains}, \hyperpage{6}
+    \subitem {get}, \hyperpage{6}
+    \subitem {is\discretionary {-}{}{}Empty}, \hyperpage{6}
+    \subitem {iterator}, \hyperpage{6}
+    \subitem {operator=}, \hyperpage{7}
+    \subitem {remove}, \hyperpage{7}
+    \subitem {set}, \hyperpage{7}
+    \subitem {size}, \hyperpage{7}
+  \item {Array\discretionary {-}{}{}List$<$ T $>$}, \hyperpage{5}
+  \item {Array\discretionary {-}{}{}List$<$ T $>$\discretionary {-}{}{}::\discretionary {-}{}{}Iterator}, 
+		\hyperpage{12}
+  \item {Array\discretionary {-}{}{}List.\discretionary {-}{}{}h}, 
+		\hyperpage{19}
+  \item {Array\discretionary {-}{}{}List\discretionary {-}{}{}::\discretionary {-}{}{}Iterator}
+    \subitem {has\discretionary {-}{}{}Next}, \hyperpage{12}
+    \subitem {next}, \hyperpage{12}
+    \subitem {remove}, \hyperpage{12}
+
+  \indexspace
+
+  \item {clear}
+    \subitem {Array\discretionary {-}{}{}List}, \hyperpage{6}
+    \subitem {Hash\discretionary {-}{}{}Map}, \hyperpage{9}
+    \subitem {Linked\discretionary {-}{}{}List}, \hyperpage{14}
+    \subitem {Tree\discretionary {-}{}{}Map}, \hyperpage{17}
+  \item {contains}
+    \subitem {Array\discretionary {-}{}{}List}, \hyperpage{6}
+    \subitem {Linked\discretionary {-}{}{}List}, \hyperpage{15}
+  \item {contains\discretionary {-}{}{}Key}
+    \subitem {Hash\discretionary {-}{}{}Map}, \hyperpage{9}
+    \subitem {Tree\discretionary {-}{}{}Map}, \hyperpage{17}
+  \item {contains\discretionary {-}{}{}Value}
+    \subitem {Hash\discretionary {-}{}{}Map}, \hyperpage{9}
+    \subitem {Tree\discretionary {-}{}{}Map}, \hyperpage{17}
+
+  \indexspace
+
+  \item {Element\discretionary {-}{}{}Not\discretionary {-}{}{}Exist}, 
+		\hyperpage{7}
+  \item {Element\discretionary {-}{}{}Not\discretionary {-}{}{}Exist.\discretionary {-}{}{}h}, 
+		\hyperpage{19}
+
+  \indexspace
+
+  \item {get}
+    \subitem {Array\discretionary {-}{}{}List}, \hyperpage{6}
+    \subitem {Hash\discretionary {-}{}{}Map}, \hyperpage{10}
+    \subitem {Linked\discretionary {-}{}{}List}, \hyperpage{15}
+    \subitem {Tree\discretionary {-}{}{}Map}, \hyperpage{17}
+  \item {get\discretionary {-}{}{}First}
+    \subitem {Linked\discretionary {-}{}{}List}, \hyperpage{15}
+  \item {get\discretionary {-}{}{}Last}
+    \subitem {Linked\discretionary {-}{}{}List}, \hyperpage{15}
+
+  \indexspace
+
+  \item {has\discretionary {-}{}{}Next}
+    \subitem {Array\discretionary {-}{}{}List\discretionary {-}{}{}::\discretionary {-}{}{}Iterator}, 
+		\hyperpage{12}
+    \subitem {Hash\discretionary {-}{}{}Map\discretionary {-}{}{}::\discretionary {-}{}{}Iterator}, 
+		\hyperpage{13}
+    \subitem {Linked\discretionary {-}{}{}List\discretionary {-}{}{}::\discretionary {-}{}{}Iterator}, 
+		\hyperpage{11}
+    \subitem {Tree\discretionary {-}{}{}Map\discretionary {-}{}{}::\discretionary {-}{}{}Iterator}, 
+		\hyperpage{11}
+  \item {Hash\discretionary {-}{}{}Map}
+    \subitem {$\sim $\discretionary {-}{}{}Hash\discretionary {-}{}{}Map}, 
+		\hyperpage{9}
+    \subitem {clear}, \hyperpage{9}
+    \subitem {contains\discretionary {-}{}{}Key}, \hyperpage{9}
+    \subitem {contains\discretionary {-}{}{}Value}, \hyperpage{9}
+    \subitem {get}, \hyperpage{10}
+    \subitem {Hash\discretionary {-}{}{}Map}, \hyperpage{9}
+    \subitem {Hash\discretionary {-}{}{}Map}, \hyperpage{9}
+    \subitem {is\discretionary {-}{}{}Empty}, \hyperpage{10}
+    \subitem {iterator}, \hyperpage{10}
+    \subitem {operator=}, \hyperpage{10}
+    \subitem {put}, \hyperpage{10}
+    \subitem {remove}, \hyperpage{10}
+    \subitem {size}, \hyperpage{10}
+  \item {Hash\discretionary {-}{}{}Map$<$ K, V, H $>$}, \hyperpage{8}
+  \item {Hash\discretionary {-}{}{}Map$<$ K, V, H $>$\discretionary {-}{}{}::\discretionary {-}{}{}Entry}, 
+		\hyperpage{7}
+  \item {Hash\discretionary {-}{}{}Map$<$ K, V, H $>$\discretionary {-}{}{}::\discretionary {-}{}{}Iterator}, 
+		\hyperpage{13}
+  \item {Hash\discretionary {-}{}{}Map.\discretionary {-}{}{}h}, 
+		\hyperpage{19}
+  \item {Hash\discretionary {-}{}{}Map\discretionary {-}{}{}::\discretionary {-}{}{}Iterator}
+    \subitem {has\discretionary {-}{}{}Next}, \hyperpage{13}
+    \subitem {next}, \hyperpage{13}
+
+  \indexspace
+
+  \item {Index\discretionary {-}{}{}Out\discretionary {-}{}{}Of\discretionary {-}{}{}Bound}, 
+		\hyperpage{10}
+  \item {Index\discretionary {-}{}{}Out\discretionary {-}{}{}Of\discretionary {-}{}{}Bound.\discretionary {-}{}{}h}, 
+		\hyperpage{20}
+  \item {is\discretionary {-}{}{}Empty}
+    \subitem {Array\discretionary {-}{}{}List}, \hyperpage{6}
+    \subitem {Hash\discretionary {-}{}{}Map}, \hyperpage{10}
+    \subitem {Linked\discretionary {-}{}{}List}, \hyperpage{15}
+    \subitem {Tree\discretionary {-}{}{}Map}, \hyperpage{18}
+  \item {iterator}
+    \subitem {Array\discretionary {-}{}{}List}, \hyperpage{6}
+    \subitem {Hash\discretionary {-}{}{}Map}, \hyperpage{10}
+    \subitem {Linked\discretionary {-}{}{}List}, \hyperpage{15}
+    \subitem {Tree\discretionary {-}{}{}Map}, \hyperpage{18}
+
+  \indexspace
+
+  \item {Linked\discretionary {-}{}{}List}
+    \subitem {$\sim $\discretionary {-}{}{}Linked\discretionary {-}{}{}List}, 
+		\hyperpage{14}
+    \subitem {add}, \hyperpage{14}
+    \subitem {add\discretionary {-}{}{}First}, \hyperpage{14}
+    \subitem {add\discretionary {-}{}{}Last}, \hyperpage{14}
+    \subitem {clear}, \hyperpage{14}
+    \subitem {contains}, \hyperpage{15}
+    \subitem {get}, \hyperpage{15}
+    \subitem {get\discretionary {-}{}{}First}, \hyperpage{15}
+    \subitem {get\discretionary {-}{}{}Last}, \hyperpage{15}
+    \subitem {is\discretionary {-}{}{}Empty}, \hyperpage{15}
+    \subitem {iterator}, \hyperpage{15}
+    \subitem {Linked\discretionary {-}{}{}List}, \hyperpage{14}
+    \subitem {Linked\discretionary {-}{}{}List}, \hyperpage{14}
+    \subitem {operator=}, \hyperpage{15}
+    \subitem {remove}, \hyperpage{15, 16}
+    \subitem {remove\discretionary {-}{}{}First}, \hyperpage{16}
+    \subitem {remove\discretionary {-}{}{}Last}, \hyperpage{16}
+    \subitem {set}, \hyperpage{16}
+    \subitem {size}, \hyperpage{16}
+  \item {Linked\discretionary {-}{}{}List$<$ T $>$}, \hyperpage{13}
+  \item {Linked\discretionary {-}{}{}List$<$ T $>$\discretionary {-}{}{}::\discretionary {-}{}{}Iterator}, 
+		\hyperpage{11}
+  \item {Linked\discretionary {-}{}{}List.\discretionary {-}{}{}h}, 
+		\hyperpage{20}
+  \item {Linked\discretionary {-}{}{}List\discretionary {-}{}{}::\discretionary {-}{}{}Iterator}
+    \subitem {has\discretionary {-}{}{}Next}, \hyperpage{11}
+    \subitem {next}, \hyperpage{11}
+    \subitem {remove}, \hyperpage{12}
+
+  \indexspace
+
+  \item {next}
+    \subitem {Array\discretionary {-}{}{}List\discretionary {-}{}{}::\discretionary {-}{}{}Iterator}, 
+		\hyperpage{12}
+    \subitem {Hash\discretionary {-}{}{}Map\discretionary {-}{}{}::\discretionary {-}{}{}Iterator}, 
+		\hyperpage{13}
+    \subitem {Linked\discretionary {-}{}{}List\discretionary {-}{}{}::\discretionary {-}{}{}Iterator}, 
+		\hyperpage{11}
+    \subitem {Tree\discretionary {-}{}{}Map\discretionary {-}{}{}::\discretionary {-}{}{}Iterator}, 
+		\hyperpage{11}
+
+  \indexspace
+
+  \item {operator=}
+    \subitem {Array\discretionary {-}{}{}List}, \hyperpage{7}
+    \subitem {Hash\discretionary {-}{}{}Map}, \hyperpage{10}
+    \subitem {Linked\discretionary {-}{}{}List}, \hyperpage{15}
+    \subitem {Tree\discretionary {-}{}{}Map}, \hyperpage{18}
+
+  \indexspace
+
+  \item {put}
+    \subitem {Hash\discretionary {-}{}{}Map}, \hyperpage{10}
+    \subitem {Tree\discretionary {-}{}{}Map}, \hyperpage{18}
+
+  \indexspace
+
+  \item {remove}
+    \subitem {Array\discretionary {-}{}{}List}, \hyperpage{7}
+    \subitem {Array\discretionary {-}{}{}List\discretionary {-}{}{}::\discretionary {-}{}{}Iterator}, 
+		\hyperpage{12}
+    \subitem {Hash\discretionary {-}{}{}Map}, \hyperpage{10}
+    \subitem {Linked\discretionary {-}{}{}List}, \hyperpage{15, 16}
+    \subitem {Linked\discretionary {-}{}{}List\discretionary {-}{}{}::\discretionary {-}{}{}Iterator}, 
+		\hyperpage{12}
+    \subitem {Tree\discretionary {-}{}{}Map}, \hyperpage{18}
+  \item {remove\discretionary {-}{}{}First}
+    \subitem {Linked\discretionary {-}{}{}List}, \hyperpage{16}
+  \item {remove\discretionary {-}{}{}Last}
+    \subitem {Linked\discretionary {-}{}{}List}, \hyperpage{16}
+
+  \indexspace
+
+  \item {set}
+    \subitem {Array\discretionary {-}{}{}List}, \hyperpage{7}
+    \subitem {Linked\discretionary {-}{}{}List}, \hyperpage{16}
+  \item {size}
+    \subitem {Array\discretionary {-}{}{}List}, \hyperpage{7}
+    \subitem {Hash\discretionary {-}{}{}Map}, \hyperpage{10}
+    \subitem {Linked\discretionary {-}{}{}List}, \hyperpage{16}
+    \subitem {Tree\discretionary {-}{}{}Map}, \hyperpage{18}
+
+  \indexspace
+
+  \item {Tree\discretionary {-}{}{}Map}
+    \subitem {$\sim $\discretionary {-}{}{}Tree\discretionary {-}{}{}Map}, 
+		\hyperpage{17}
+    \subitem {clear}, \hyperpage{17}
+    \subitem {contains\discretionary {-}{}{}Key}, \hyperpage{17}
+    \subitem {contains\discretionary {-}{}{}Value}, \hyperpage{17}
+    \subitem {get}, \hyperpage{17}
+    \subitem {is\discretionary {-}{}{}Empty}, \hyperpage{18}
+    \subitem {iterator}, \hyperpage{18}
+    \subitem {operator=}, \hyperpage{18}
+    \subitem {put}, \hyperpage{18}
+    \subitem {remove}, \hyperpage{18}
+    \subitem {size}, \hyperpage{18}
+    \subitem {Tree\discretionary {-}{}{}Map}, \hyperpage{17}
+    \subitem {Tree\discretionary {-}{}{}Map}, \hyperpage{17}
+  \item {Tree\discretionary {-}{}{}Map$<$ K, V $>$}, \hyperpage{16}
+  \item {Tree\discretionary {-}{}{}Map$<$ K, V $>$\discretionary {-}{}{}::\discretionary {-}{}{}Entry}, 
+		\hyperpage{8}
+  \item {Tree\discretionary {-}{}{}Map$<$ K, V $>$\discretionary {-}{}{}::\discretionary {-}{}{}Iterator}, 
+		\hyperpage{11}
+  \item {Tree\discretionary {-}{}{}Map.\discretionary {-}{}{}h}, 
+		\hyperpage{20}
+  \item {Tree\discretionary {-}{}{}Map\discretionary {-}{}{}::\discretionary {-}{}{}Iterator}
+    \subitem {has\discretionary {-}{}{}Next}, \hyperpage{11}
+    \subitem {next}, \hyperpage{11}
+
+\end{theindex}

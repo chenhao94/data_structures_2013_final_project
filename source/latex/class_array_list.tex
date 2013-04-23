@@ -1,0 +1,190 @@
+\hypertarget{class_array_list}{\section{Array\-List$<$ T $>$ Class Template Reference}
+\label{class_array_list}\index{Array\-List$<$ T $>$@{Array\-List$<$ T $>$}}
+}
+
+
+{\ttfamily \#include $<$Array\-List.\-h$>$}
+
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{class_array_list_1_1_iterator}{Iterator}
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_array_list_a77ba51ae82bb2246563af5c4d64d438e}{Array\-List} ()
+\item 
+\hyperlink{class_array_list_a4af637822f64b61267b1e0ed4d4fca33}{$\sim$\-Array\-List} ()
+\item 
+\hyperlink{class_array_list}{Array\-List} \& \hyperlink{class_array_list_a1402bb47d6b3ff2bd4a85b399b47ed43}{operator=} (const \hyperlink{class_array_list}{Array\-List} \&x)
+\item 
+\hyperlink{class_array_list_a26a0ec7d7ef42629aadc2d80cc3dd79a}{Array\-List} (const \hyperlink{class_array_list}{Array\-List} \&x)
+\item 
+bool \hyperlink{class_array_list_a901a15ad355382ca8ff9b6af52c45bb4}{add} (const T \&e)
+\item 
+void \hyperlink{class_array_list_aab84cd5b5f384c75f82435510174b063}{add} (int index, const T \&element)
+\item 
+void \hyperlink{class_array_list_acb53d54675318c94332d0ec8b6819eb3}{clear} ()
+\item 
+bool \hyperlink{class_array_list_a42ababd87cc9201d1e2b094afb491f35}{contains} (const T \&e) const 
+\item 
+const T \& \hyperlink{class_array_list_a3f0e007a5e5fe15fc2cba68a486aa52e}{get} (int index) const 
+\item 
+bool \hyperlink{class_array_list_a9960a0e31e9e8d3be18c023cf5153df3}{is\-Empty} () const 
+\item 
+void \hyperlink{class_array_list_ac95cf76569c70453fc31141adcc2bbcb}{remove} (int index)
+\item 
+bool \hyperlink{class_array_list_a778ee61fb6c7fe5049785dac553ca5fd}{remove} (const T \&e)
+\item 
+void \hyperlink{class_array_list_ac14d91b42cca9eceb6393e4d25519a7c}{set} (int index, const T \&element)
+\item 
+int \hyperlink{class_array_list_aff9c6ac40886044e4653174950d23e74}{size} () const 
+\item 
+\hyperlink{class_array_list_1_1_iterator}{Iterator} \hyperlink{class_array_list_af44d06bd430e58dafa3f781cafdc0d9b}{iterator} ()
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\subsubsection*{template$<$class T$>$class Array\-List$<$ T $>$}
+
+The \hyperlink{class_array_list}{Array\-List} is just like vector in C++. You should know that \char`\"{}capacity\char`\"{} here doesn't mean how many elements are now in this list, where it means the length of the array of your internal implemention
+
+The iterator iterates in the order of the elements being loaded into this list 
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{class_array_list_a77ba51ae82bb2246563af5c4d64d438e}{\index{Array\-List@{Array\-List}!Array\-List@{Array\-List}}
+\index{Array\-List@{Array\-List}!ArrayList@{Array\-List}}
+\subsubsection[{Array\-List}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class T $>$ {\bf Array\-List}$<$ T $>$\-::{\bf Array\-List} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_array_list_a77ba51ae82bb2246563af5c4d64d438e}
+T\-O\-D\-O Constructs an empty array list. \hypertarget{class_array_list_a4af637822f64b61267b1e0ed4d4fca33}{\index{Array\-List@{Array\-List}!$\sim$\-Array\-List@{$\sim$\-Array\-List}}
+\index{$\sim$\-Array\-List@{$\sim$\-Array\-List}!ArrayList@{Array\-List}}
+\subsubsection[{$\sim$\-Array\-List}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class T $>$ {\bf Array\-List}$<$ T $>$\-::$\sim${\bf Array\-List} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_array_list_a4af637822f64b61267b1e0ed4d4fca33}
+T\-O\-D\-O Destructor \hypertarget{class_array_list_a26a0ec7d7ef42629aadc2d80cc3dd79a}{\index{Array\-List@{Array\-List}!Array\-List@{Array\-List}}
+\index{Array\-List@{Array\-List}!ArrayList@{Array\-List}}
+\subsubsection[{Array\-List}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class T $>$ {\bf Array\-List}$<$ T $>$\-::{\bf Array\-List} (
+\begin{DoxyParamCaption}
+\item[{const {\bf Array\-List}$<$ T $>$ \&}]{x}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_array_list_a26a0ec7d7ef42629aadc2d80cc3dd79a}
+T\-O\-D\-O Copy-\/constructor 
+
+\subsection{Member Function Documentation}
+\hypertarget{class_array_list_a901a15ad355382ca8ff9b6af52c45bb4}{\index{Array\-List@{Array\-List}!add@{add}}
+\index{add@{add}!ArrayList@{Array\-List}}
+\subsubsection[{add}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class T $>$ bool {\bf Array\-List}$<$ T $>$\-::add (
+\begin{DoxyParamCaption}
+\item[{const T \&}]{e}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_array_list_a901a15ad355382ca8ff9b6af52c45bb4}
+T\-O\-D\-O Appends the specified element to the end of this list. \hypertarget{class_array_list_aab84cd5b5f384c75f82435510174b063}{\index{Array\-List@{Array\-List}!add@{add}}
+\index{add@{add}!ArrayList@{Array\-List}}
+\subsubsection[{add}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class T $>$ void {\bf Array\-List}$<$ T $>$\-::add (
+\begin{DoxyParamCaption}
+\item[{int}]{index, }
+\item[{const T \&}]{element}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_array_list_aab84cd5b5f384c75f82435510174b063}
+T\-O\-D\-O Inserts the specified element to the specified position in this list. The range of index parameter is \mbox{[}0, size\mbox{]}, where index=0 means inserting to the head, and index=size means appending to the end. 
+\begin{DoxyExceptions}{Exceptions}
+{\em \hyperlink{class_index_out_of_bound}{Index\-Out\-Of\-Bound}} & \\
+\hline
+\end{DoxyExceptions}
+\hypertarget{class_array_list_acb53d54675318c94332d0ec8b6819eb3}{\index{Array\-List@{Array\-List}!clear@{clear}}
+\index{clear@{clear}!ArrayList@{Array\-List}}
+\subsubsection[{clear}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class T $>$ void {\bf Array\-List}$<$ T $>$\-::clear (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_array_list_acb53d54675318c94332d0ec8b6819eb3}
+T\-O\-D\-O Removes all of the elements from this list. \hypertarget{class_array_list_a42ababd87cc9201d1e2b094afb491f35}{\index{Array\-List@{Array\-List}!contains@{contains}}
+\index{contains@{contains}!ArrayList@{Array\-List}}
+\subsubsection[{contains}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class T $>$ bool {\bf Array\-List}$<$ T $>$\-::contains (
+\begin{DoxyParamCaption}
+\item[{const T \&}]{e}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_array_list_a42ababd87cc9201d1e2b094afb491f35}
+T\-O\-D\-O Returns true if this list contains the specified element. \hypertarget{class_array_list_a3f0e007a5e5fe15fc2cba68a486aa52e}{\index{Array\-List@{Array\-List}!get@{get}}
+\index{get@{get}!ArrayList@{Array\-List}}
+\subsubsection[{get}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class T $>$ const T\& {\bf Array\-List}$<$ T $>$\-::get (
+\begin{DoxyParamCaption}
+\item[{int}]{index}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_array_list_a3f0e007a5e5fe15fc2cba68a486aa52e}
+T\-O\-D\-O Returns a const reference to the element at the specified position in this list. The index is zero-\/based, with range \mbox{[}0, size). 
+\begin{DoxyExceptions}{Exceptions}
+{\em \hyperlink{class_index_out_of_bound}{Index\-Out\-Of\-Bound}} & \\
+\hline
+\end{DoxyExceptions}
+\hypertarget{class_array_list_a9960a0e31e9e8d3be18c023cf5153df3}{\index{Array\-List@{Array\-List}!is\-Empty@{is\-Empty}}
+\index{is\-Empty@{is\-Empty}!ArrayList@{Array\-List}}
+\subsubsection[{is\-Empty}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class T $>$ bool {\bf Array\-List}$<$ T $>$\-::is\-Empty (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_array_list_a9960a0e31e9e8d3be18c023cf5153df3}
+T\-O\-D\-O Returns true if this list contains no elements. \hypertarget{class_array_list_af44d06bd430e58dafa3f781cafdc0d9b}{\index{Array\-List@{Array\-List}!iterator@{iterator}}
+\index{iterator@{iterator}!ArrayList@{Array\-List}}
+\subsubsection[{iterator}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class T $>$ {\bf Iterator} {\bf Array\-List}$<$ T $>$\-::iterator (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_array_list_af44d06bd430e58dafa3f781cafdc0d9b}
+T\-O\-D\-O Returns an iterator over the elements in this list. \hypertarget{class_array_list_a1402bb47d6b3ff2bd4a85b399b47ed43}{\index{Array\-List@{Array\-List}!operator=@{operator=}}
+\index{operator=@{operator=}!ArrayList@{Array\-List}}
+\subsubsection[{operator=}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class T $>$ {\bf Array\-List}\& {\bf Array\-List}$<$ T $>$\-::operator= (
+\begin{DoxyParamCaption}
+\item[{const {\bf Array\-List}$<$ T $>$ \&}]{x}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_array_list_a1402bb47d6b3ff2bd4a85b399b47ed43}
+T\-O\-D\-O Assignment operator \hypertarget{class_array_list_ac95cf76569c70453fc31141adcc2bbcb}{\index{Array\-List@{Array\-List}!remove@{remove}}
+\index{remove@{remove}!ArrayList@{Array\-List}}
+\subsubsection[{remove}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class T $>$ void {\bf Array\-List}$<$ T $>$\-::remove (
+\begin{DoxyParamCaption}
+\item[{int}]{index}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_array_list_ac95cf76569c70453fc31141adcc2bbcb}
+T\-O\-D\-O Removes the element at the specified position in this list. The index is zero-\/based, with range \mbox{[}0, size). 
+\begin{DoxyExceptions}{Exceptions}
+{\em \hyperlink{class_index_out_of_bound}{Index\-Out\-Of\-Bound}} & \\
+\hline
+\end{DoxyExceptions}
+\hypertarget{class_array_list_a778ee61fb6c7fe5049785dac553ca5fd}{\index{Array\-List@{Array\-List}!remove@{remove}}
+\index{remove@{remove}!ArrayList@{Array\-List}}
+\subsubsection[{remove}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class T $>$ bool {\bf Array\-List}$<$ T $>$\-::remove (
+\begin{DoxyParamCaption}
+\item[{const T \&}]{e}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_array_list_a778ee61fb6c7fe5049785dac553ca5fd}
+T\-O\-D\-O Removes the first occurrence of the specified element from this list, if it is present. Returns true if it is present in the list, otherwise false. \hypertarget{class_array_list_ac14d91b42cca9eceb6393e4d25519a7c}{\index{Array\-List@{Array\-List}!set@{set}}
+\index{set@{set}!ArrayList@{Array\-List}}
+\subsubsection[{set}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class T $>$ void {\bf Array\-List}$<$ T $>$\-::set (
+\begin{DoxyParamCaption}
+\item[{int}]{index, }
+\item[{const T \&}]{element}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_array_list_ac14d91b42cca9eceb6393e4d25519a7c}
+T\-O\-D\-O Replaces the element at the specified position in this list with the specified element. The index is zero-\/based, with range \mbox{[}0, size). 
+\begin{DoxyExceptions}{Exceptions}
+{\em \hyperlink{class_index_out_of_bound}{Index\-Out\-Of\-Bound}} & \\
+\hline
+\end{DoxyExceptions}
+\hypertarget{class_array_list_aff9c6ac40886044e4653174950d23e74}{\index{Array\-List@{Array\-List}!size@{size}}
+\index{size@{size}!ArrayList@{Array\-List}}
+\subsubsection[{size}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class T $>$ int {\bf Array\-List}$<$ T $>$\-::size (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_array_list_aff9c6ac40886044e4653174950d23e74}
+T\-O\-D\-O Returns the number of elements in this list. 
+
+The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_array_list_8h}{Array\-List.\-h}\end{DoxyCompactItemize}

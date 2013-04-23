@@ -1,0 +1,161 @@
+\hypertarget{class_tree_map}{\section{Tree\-Map$<$ K, V $>$ Class Template Reference}
+\label{class_tree_map}\index{Tree\-Map$<$ K, V $>$@{Tree\-Map$<$ K, V $>$}}
+}
+
+
+{\ttfamily \#include $<$Tree\-Map.\-h$>$}
+
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{class_tree_map_1_1_entry}{Entry}
+\item 
+class \hyperlink{class_tree_map_1_1_iterator}{Iterator}
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_tree_map_a593591d7d7c54568e71718f4c1f18372}{Tree\-Map} ()
+\item 
+\hyperlink{class_tree_map_a61ade1db7da7e51d738b030d8c877353}{$\sim$\-Tree\-Map} ()
+\item 
+\hyperlink{class_tree_map}{Tree\-Map} \& \hyperlink{class_tree_map_a21356ebe18e7b16236dd41d50e4f2682}{operator=} (const \hyperlink{class_tree_map}{Tree\-Map} \&x)
+\item 
+\hyperlink{class_tree_map_a7d383b214da43cac0619faa472e1f719}{Tree\-Map} (const \hyperlink{class_tree_map}{Tree\-Map} \&x)
+\item 
+\hyperlink{class_tree_map_1_1_iterator}{Iterator} \hyperlink{class_tree_map_abcc2dd91edbd669e3b117700ea1cea47}{iterator} () const 
+\item 
+void \hyperlink{class_tree_map_a38e2b91c7f411cc38f8f904caaa56f92}{clear} ()
+\item 
+bool \hyperlink{class_tree_map_a1210e85fda1625a246bd38821234cfc1}{contains\-Key} (const K \&key) const 
+\item 
+bool \hyperlink{class_tree_map_aff9f0239099fa20f190f9278ec4caf24}{contains\-Value} (const V \&value) const 
+\item 
+const V \& \hyperlink{class_tree_map_a77456cc28ea659dac453e607874f7981}{get} (const K \&key) const 
+\item 
+bool \hyperlink{class_tree_map_aaf357ad82338a39c45d02fed5aaa714b}{is\-Empty} () const 
+\item 
+void \hyperlink{class_tree_map_a825b6036e93a2585fd04f89807356c04}{put} (const K \&key, const V \&value)
+\item 
+void \hyperlink{class_tree_map_a7978fe6226b466d0b0f382b15f9c2972}{remove} (const K \&key)
+\item 
+int \hyperlink{class_tree_map_ac8e67b70aca3ce24a9b4a2f27256690a}{size} () const 
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\subsubsection*{template$<$class K, class V$>$class Tree\-Map$<$ K, V $>$}
+
+\hyperlink{class_tree_map}{Tree\-Map} is the balanced-\/tree implementation of map. The iterators must iterate through the map in the natural order (operator$<$) of the key. 
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{class_tree_map_a593591d7d7c54568e71718f4c1f18372}{\index{Tree\-Map@{Tree\-Map}!Tree\-Map@{Tree\-Map}}
+\index{Tree\-Map@{Tree\-Map}!TreeMap@{Tree\-Map}}
+\subsubsection[{Tree\-Map}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class K , class V $>$ {\bf Tree\-Map}$<$ K, V $>$\-::{\bf Tree\-Map} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_tree_map_a593591d7d7c54568e71718f4c1f18372}
+T\-O\-D\-O Constructs an empty tree map. \hypertarget{class_tree_map_a61ade1db7da7e51d738b030d8c877353}{\index{Tree\-Map@{Tree\-Map}!$\sim$\-Tree\-Map@{$\sim$\-Tree\-Map}}
+\index{$\sim$\-Tree\-Map@{$\sim$\-Tree\-Map}!TreeMap@{Tree\-Map}}
+\subsubsection[{$\sim$\-Tree\-Map}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class K , class V $>$ {\bf Tree\-Map}$<$ K, V $>$\-::$\sim${\bf Tree\-Map} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_tree_map_a61ade1db7da7e51d738b030d8c877353}
+T\-O\-D\-O Destructor \hypertarget{class_tree_map_a7d383b214da43cac0619faa472e1f719}{\index{Tree\-Map@{Tree\-Map}!Tree\-Map@{Tree\-Map}}
+\index{Tree\-Map@{Tree\-Map}!TreeMap@{Tree\-Map}}
+\subsubsection[{Tree\-Map}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class K , class V $>$ {\bf Tree\-Map}$<$ K, V $>$\-::{\bf Tree\-Map} (
+\begin{DoxyParamCaption}
+\item[{const {\bf Tree\-Map}$<$ K, V $>$ \&}]{x}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_tree_map_a7d383b214da43cac0619faa472e1f719}
+T\-O\-D\-O Copy-\/constructor 
+
+\subsection{Member Function Documentation}
+\hypertarget{class_tree_map_a38e2b91c7f411cc38f8f904caaa56f92}{\index{Tree\-Map@{Tree\-Map}!clear@{clear}}
+\index{clear@{clear}!TreeMap@{Tree\-Map}}
+\subsubsection[{clear}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class K , class V $>$ void {\bf Tree\-Map}$<$ K, V $>$\-::clear (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_tree_map_a38e2b91c7f411cc38f8f904caaa56f92}
+T\-O\-D\-O Removes all of the mappings from this map. \hypertarget{class_tree_map_a1210e85fda1625a246bd38821234cfc1}{\index{Tree\-Map@{Tree\-Map}!contains\-Key@{contains\-Key}}
+\index{contains\-Key@{contains\-Key}!TreeMap@{Tree\-Map}}
+\subsubsection[{contains\-Key}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class K , class V $>$ bool {\bf Tree\-Map}$<$ K, V $>$\-::contains\-Key (
+\begin{DoxyParamCaption}
+\item[{const K \&}]{key}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_tree_map_a1210e85fda1625a246bd38821234cfc1}
+T\-O\-D\-O Returns true if this map contains a mapping for the specified key. \hypertarget{class_tree_map_aff9f0239099fa20f190f9278ec4caf24}{\index{Tree\-Map@{Tree\-Map}!contains\-Value@{contains\-Value}}
+\index{contains\-Value@{contains\-Value}!TreeMap@{Tree\-Map}}
+\subsubsection[{contains\-Value}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class K , class V $>$ bool {\bf Tree\-Map}$<$ K, V $>$\-::contains\-Value (
+\begin{DoxyParamCaption}
+\item[{const V \&}]{value}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_tree_map_aff9f0239099fa20f190f9278ec4caf24}
+T\-O\-D\-O Returns true if this map maps one or more keys to the specified value. \hypertarget{class_tree_map_a77456cc28ea659dac453e607874f7981}{\index{Tree\-Map@{Tree\-Map}!get@{get}}
+\index{get@{get}!TreeMap@{Tree\-Map}}
+\subsubsection[{get}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class K , class V $>$ const V\& {\bf Tree\-Map}$<$ K, V $>$\-::get (
+\begin{DoxyParamCaption}
+\item[{const K \&}]{key}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_tree_map_a77456cc28ea659dac453e607874f7981}
+T\-O\-D\-O Returns a const reference to the value to which the specified key is mapped. If the key is not present in this map, this function should throw \hyperlink{class_element_not_exist}{Element\-Not\-Exist} exception. 
+\begin{DoxyExceptions}{Exceptions}
+{\em \hyperlink{class_element_not_exist}{Element\-Not\-Exist}} & \\
+\hline
+\end{DoxyExceptions}
+\hypertarget{class_tree_map_aaf357ad82338a39c45d02fed5aaa714b}{\index{Tree\-Map@{Tree\-Map}!is\-Empty@{is\-Empty}}
+\index{is\-Empty@{is\-Empty}!TreeMap@{Tree\-Map}}
+\subsubsection[{is\-Empty}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class K , class V $>$ bool {\bf Tree\-Map}$<$ K, V $>$\-::is\-Empty (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_tree_map_aaf357ad82338a39c45d02fed5aaa714b}
+T\-O\-D\-O Returns true if this map contains no key-\/value mappings. \hypertarget{class_tree_map_abcc2dd91edbd669e3b117700ea1cea47}{\index{Tree\-Map@{Tree\-Map}!iterator@{iterator}}
+\index{iterator@{iterator}!TreeMap@{Tree\-Map}}
+\subsubsection[{iterator}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class K , class V $>$ {\bf Iterator} {\bf Tree\-Map}$<$ K, V $>$\-::iterator (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_tree_map_abcc2dd91edbd669e3b117700ea1cea47}
+T\-O\-D\-O Returns an iterator over the elements in this map. \hypertarget{class_tree_map_a21356ebe18e7b16236dd41d50e4f2682}{\index{Tree\-Map@{Tree\-Map}!operator=@{operator=}}
+\index{operator=@{operator=}!TreeMap@{Tree\-Map}}
+\subsubsection[{operator=}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class K , class V $>$ {\bf Tree\-Map}\& {\bf Tree\-Map}$<$ K, V $>$\-::operator= (
+\begin{DoxyParamCaption}
+\item[{const {\bf Tree\-Map}$<$ K, V $>$ \&}]{x}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_tree_map_a21356ebe18e7b16236dd41d50e4f2682}
+T\-O\-D\-O Assignment operator \hypertarget{class_tree_map_a825b6036e93a2585fd04f89807356c04}{\index{Tree\-Map@{Tree\-Map}!put@{put}}
+\index{put@{put}!TreeMap@{Tree\-Map}}
+\subsubsection[{put}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class K , class V $>$ void {\bf Tree\-Map}$<$ K, V $>$\-::put (
+\begin{DoxyParamCaption}
+\item[{const K \&}]{key, }
+\item[{const V \&}]{value}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_tree_map_a825b6036e93a2585fd04f89807356c04}
+T\-O\-D\-O Associates the specified value with the specified key in this map. \hypertarget{class_tree_map_a7978fe6226b466d0b0f382b15f9c2972}{\index{Tree\-Map@{Tree\-Map}!remove@{remove}}
+\index{remove@{remove}!TreeMap@{Tree\-Map}}
+\subsubsection[{remove}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class K , class V $>$ void {\bf Tree\-Map}$<$ K, V $>$\-::remove (
+\begin{DoxyParamCaption}
+\item[{const K \&}]{key}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_tree_map_a7978fe6226b466d0b0f382b15f9c2972}
+T\-O\-D\-O Removes the mapping for the specified key from this map if present. If there is no mapping for the specified key, throws \hyperlink{class_element_not_exist}{Element\-Not\-Exist} exception. 
+\begin{DoxyExceptions}{Exceptions}
+{\em \hyperlink{class_element_not_exist}{Element\-Not\-Exist}} & \\
+\hline
+\end{DoxyExceptions}
+\hypertarget{class_tree_map_ac8e67b70aca3ce24a9b4a2f27256690a}{\index{Tree\-Map@{Tree\-Map}!size@{size}}
+\index{size@{size}!TreeMap@{Tree\-Map}}
+\subsubsection[{size}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class K , class V $>$ int {\bf Tree\-Map}$<$ K, V $>$\-::size (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_tree_map_ac8e67b70aca3ce24a9b4a2f27256690a}
+T\-O\-D\-O Returns the number of key-\/value mappings in this map. 
+
+The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_tree_map_8h}{Tree\-Map.\-h}\end{DoxyCompactItemize}
