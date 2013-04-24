@@ -49,7 +49,110 @@ private:
     
     
 public:
-    class Iterator;
+    class Iterator
+    {
+    private:
+    	ArrayList<T> *list;
+    	int pos;
+    
+    public:
+    	/**
+    	 * TODO Constructs an empty iterator.
+    	 */
+    	Iterator(): list(NULL), pos(0){}
+    	
+    	/**
+    	 * TODO Constructs an new iterator.
+    	 */
+    	Iterator(const ArrayList<T>*& li , int po = -1)
+    	//list(li), 
+    	//pos(po)
+    	{
+    		list=li;
+    		pos=po;
+    	}
+    	
+    	/**
+    	 * TODO Copy-constructor
+
+    	 */
+    	Iterator(const Iterator& itr): list(itr.list), pos(itr.pos){}
+    	
+    	/**
+    	 * TODO Assignment operator
+
+    	 */
+    	Iterator& operator=(const Iterator& itr)
+    	 {
+    	 	list = itr.list;
+    	 	pos = itr.pos;
+    	 }
+    	
+    	/**
+
+    	 * TODO ++ operator
+    	 */
+    	Iterator operator++()
+    	 {
+    	 	if (pos >= list->length)
+    	 	 throw IndexOutOfBound("The position of the Iterator is out of bound.");
+    	 	++pos;
+    	 	return *this;
+    	 }
+    	
+    	/**
+    	 * TODO -- operator
+
+    	 */
+    	Iterator operator--()
+    	 {
+    	 	if (pos <= 0)
+    	 	 throw IndexOutOfBound("The position of the Iterator is out of bound.");
+    	 	--pos;
+    	 	return *this;
+    	 }
+    	
+    	/**
+    	 * TODO -- operator
+    	 */
+    	T& operator*()
+    	 {
+    	 	if (pos < 0 || pos >= list->length)
+    	 	 throw IndexOutOfBound("The position of the Iterator is out of bound.");
+    	 	return list->data[pos];
+    	 }
+    
+        /**
+
+         * TODO Returns true if the iteration has more elements.
+         */
+        bool hasNext() { return (pos+1<list->length); }
+
+        /**
+         * TODO Returns the next element in the iteration.
+
+         * @throw ElementNotExist exception when hasNext() == false
+         */
+        const T &next()
+         {
+         	if (!hasNext())
+         	 throw ElementNotExist("The element you want to visit does not exsit.");
+         	return (list->data[pos+1]);
+         }
+
+        /**
+         * TODO Removes from the underlying collection the last element
+         * returned by the iterator
+
+         * @throw ElementNotExist
+         */
+        void remove()
+         {
+         	if ( pos<0 || pos >= list->length )
+         	 throw ElementNotExist("The element you want to visit does not exsit.");
+         	list->removeIndex(pos);
+         }
+	};
 
     /**
      * TODO Constructs an empty array list.
@@ -129,7 +232,7 @@ public:
      * TODO [] operator
 
      */
-    ArrayList& operator[](int index)
+    T& operator[](int index)
      {
      	if (index < 0 || index >= length)
     	 throw IndexOutOfBound("The position of the Iterator is out of bound.");
@@ -187,7 +290,7 @@ public:
      	for (int i=0; i<length; ++i)
      	 if (data[i] == e)
      	  {
-     	  	remove(i);
+     	  	removeIndex(i);
      	  	return true;
      	  }
      	return false;
@@ -215,99 +318,10 @@ public:
      */
     Iterator iterator()
      {
-     	Iterator itr(this, -1);
+     	const ArrayList<T> *tmp = this;
+     	Iterator itr(tmp, -1);
      	return itr;
      }
-};
-
-template <class T>
-class Iterator
-{
-    private:
-    ArrayList<T> *list;
-    int pos;
-    
-    public:
-    	/**
-    	 * TODO Constructs an empty iterator.
-    	 */
-    	Iterator(const ArrayList<T> *li = NULL, int po = 0): list(li), pos(po){}
-    	
-    	/**
-    	 * TODO Copy-constructor
-    	 */
-    	Iterator(const Iterator& itr): list(itr.list), pos(itr.pos){}
-    	
-    	/**
-    	 * TODO Assignment operator
-    	 */
-    	Iterator& operator=(const Iterator& itr)
-    	 {
-    	 	list = itr.list;
-    	 	pos = itr.pos;
-    	 }
-    	
-    	/**
-    	 * TODO ++ operator
-    	 */
-    	Iterator operator++()
-    	 {
-    	 	if (pos >= list->length)
-    	 	 throw IndexOutOfBound("The position of the Iterator is out of bound.");
-    	 	++pos;
-    	 	return *this;
-    	 }
-    	
-    	/**
-    	 * TODO -- operator
-    	 */
-    	Iterator operator--()
-    	 {
-    	 	if (pos <= 0)
-    	 	 throw IndexOutOfBound("The position of the Iterator is out of bound.");
-    	 	--pos;
-    	 	return *this;
-    	 }
-    	
-    	/**
-    	 * TODO -- operator
-    	 */
-    	Iterator& operator*()
-    	 {
-    	 	if (pos < 0 || pos >= list->length)
-    	 	 throw IndexOutOfBound("The position of the Iterator is out of bound.");
-    	 	return list->data[pos];
-    	 }
-    
-        /**
-         * TODO Returns true if the iteration has more elements.
-         */
-        bool hasNext() { return (pos+1<list->length); }
-
-        /**
-         * TODO Returns the next element in the iteration.
-
-         * @throw ElementNotExist exception when hasNext() == false
-         */
-        const T &next()
-         {
-         	if (!hasNext())
-         	 throw ElementNotExist("The element you want to visit does not exsit.");
-         	return (list->data[pos+1]);
-         }
-
-        /**
-         * TODO Removes from the underlying collection the last element
-         * returned by the iterator
-
-         * @throw ElementNotExist
-         */
-        void remove()
-         {
-         	if ( pos<0 || pos >= list->length )
-         	 throw ElementNotExist("The element you want to visit does not exsit.");
-         	list->removeIndex();
-         }
 };
 
 #endif
