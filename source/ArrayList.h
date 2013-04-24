@@ -19,7 +19,7 @@ class ArrayList
 private:
     
     T *data;
-    static const initialSize = 100;
+    static const int initialSize = 100;
     long capacity, length;
     
     /**
@@ -37,13 +37,12 @@ private:
      	 }
      	catch (AllocationFailure error)
      	 {
-     	 	cout << error.msg << endl;
      	 	return false;
      	 }
      	
      	for (int i=0 ; i<length ;++i)
      	 data[i] = tmp[i];
-     	delete tmp[];
+     	delete []tmp;
      	
      	return true;
      }
@@ -64,31 +63,22 @@ public:
     /**
      * TODO Destructor
      */
-    virtual ~ArrayList() { delete data[]; }
+    virtual ~ArrayList() { delete []data; }
 
     /**
      * TODO Assignment operator
      */
-    ArrayList& operator=(const ArrayList& x) : capacity(x.capacity), length(x.length)
+    ArrayList& operator=(const ArrayList& x)
      {
-     	delete data[];
+     	delete []data;
+     	capacity=x.capacity;
+     	length=x.length;
      	data = new T[capacity];
      	if (data == NULL) throw AllocationFailure("The operation 'new' is failed.");
      	for (int i=0 ; i<length ; ++i)
      	 data[i]=x.data[i];
      }
     
-    /**
-     * TODO [] operator
-
-     */
-    ArrayList& operator[](int index)
-     {
-     	if (index < 0 || index >= length)
-    	 throw IndexOutOfBound("The position of the Iterator is out of bound.");
-    	return data[index];
-     }
-
     /**
      * TODO Copy-constructor
      */
@@ -120,7 +110,7 @@ public:
      */
     void add(int index, const T& element)
      {
-     	if ( index > length )
+     	if ( index<0 || index > length )
      	 throw IndexOutOfBound("Index out of bound.");
      	if (length == capacity && !doubleSize())
      	 throw IndexOutOfBound("Failed to add the element into the list, because we cannot enlarge the capacity of the list.");
@@ -136,14 +126,14 @@ public:
     void clear() { length=0; }
 
     /**
-     * TODO Returns true if this list contains the specified element.
+     * TODO [] operator
+
      */
-    bool contains(const T& e) const
+    ArrayList& operator[](int index)
      {
-     	for (int i=0; i<length; ++i)
-     	 if ( e == data[i] )
-     	  return true;
-     	return false;
+     	if (index < 0 || index >= length)
+    	 throw IndexOutOfBound("The position of the Iterator is out of bound.");
+    	return data[index];
      }
 
     /**
@@ -153,9 +143,20 @@ public:
      */
     const T& get(int index) const
      {
-     	if ( index >= length )
+     	if ( index < 0 || index >= length )
      	 throw IndexOutOfBound("Index out of bound.");
      	return data[index];
+     }
+
+    /**
+     * TODO Returns true if this list contains the specified element.
+     */
+    bool contains(const T& e) const
+     {
+     	for (int i=0; i<length; ++i)
+     	 if ( e == data[i] )
+     	  return true;
+     	return false;
      }
 
     /**
@@ -170,7 +171,7 @@ public:
      */
     void removeIndex(int index)
      {
-     	if ( index >= length )
+     	if ( index < 0 || index >= length )
      	 throw IndexOutOfBound("Index out of bound.");
      	--length;
      	for (int i=index; i<length; ++i)
@@ -199,7 +200,7 @@ public:
      */
     void set(int index, const T &element)
      {
-     	if ( index >= length )
+     	if ( index < 0 || index >= length )
      	 throw IndexOutOfBound("Index out of bound.");
      	data[index] = element;
      }
@@ -214,22 +215,23 @@ public:
      */
     Iterator iterator()
      {
-     	Iterator itr(tihis, -1);
+     	Iterator itr(this, -1);
      	return itr;
      }
 };
 
+template <class T>
 class Iterator
 {
     private:
-    ArrayList *list;
+    ArrayList<T> *list;
     int pos;
     
     public:
     	/**
     	 * TODO Constructs an empty iterator.
     	 */
-    	Iterator(const ArrayList *li = NULL, int po = 0): list(li), pos(po){}
+    	Iterator(const ArrayList<T> *li = NULL, int po = 0): list(li), pos(po){}
     	
     	/**
     	 * TODO Copy-constructor
@@ -239,7 +241,11 @@ class Iterator
     	/**
     	 * TODO Assignment operator
     	 */
-    	Iterator& operator=(const Iterator& itr):list(itr.list), pos(itr.pos){}
+    	Iterator& operator=(const Iterator& itr)
+    	 {
+    	 	list = itr.list;
+    	 	pos = itr.pos;
+    	 }
     	
     	/**
     	 * TODO ++ operator
@@ -287,7 +293,7 @@ class Iterator
          {
          	if (!hasNext())
          	 throw ElementNotExist("The element you want to visit does not exsit.");
-         	return (list->data[pos+1];)
+         	return (list->data[pos+1]);
          }
 
         /**
@@ -298,7 +304,7 @@ class Iterator
          */
         void remove()
          {
-         	if ( pos >= list->length )
+         	if ( pos<0 || pos >= list->length )
          	 throw ElementNotExist("The element you want to visit does not exsit.");
          	list->removeIndex();
          }
