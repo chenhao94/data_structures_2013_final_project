@@ -51,26 +51,18 @@ private:
 public:
     class Iterator
     {
+    
+    typedef ArrayList<T>* ArrayListPointer;
+    
     private:
     	ArrayList<T> *list;
     	int pos;
     
     public:
     	/**
-    	 * TODO Constructs an empty iterator.
-    	 */
-    	Iterator(): list(NULL), pos(0){}
-    	
-    	/**
     	 * TODO Constructs an new iterator.
     	 */
-    	Iterator(const ArrayList<T>*& li , int po = -1)
-    	//list(li), 
-    	//pos(po)
-    	{
-    		list=li;
-    		pos=po;
-    	}
+    	Iterator(const ArrayListPointer& li = NULL , int po = -1): list(li), pos(po){}
     	
     	/**
     	 * TODO Copy-constructor
@@ -318,8 +310,7 @@ public:
      */
     Iterator iterator()
      {
-     	const ArrayList<T> *tmp = this;
-     	Iterator itr(tmp, -1);
+     	Iterator itr(this);
      	return itr;
      }
 };
