@@ -56,60 +56,21 @@ public:
     
     private:
     	ArrayList<T> *list;
-    	int pos;
+    	T pos;
+    	bool flag; // iff next() has been called, flag = true
     
     public:
     	/**
     	 * TODO Constructs an new iterator.
     	 */
-    	Iterator(const ArrayListPointer& li = NULL , int po = -1): list(li), pos(po){}
+    	Iterator(const ArrayListPointer& li = NULL): list(li), pos(-1), flag(false){}
     	
     	/**
-    	 * TODO Copy-constructor
-
-    	 */
-    	Iterator(const Iterator& itr): list(itr.list), pos(itr.pos){}
-    	
-    	/**
-    	 * TODO Assignment operator
-
-    	 */
-    	Iterator& operator=(const Iterator& itr)
-    	 {
-    	 	list = itr.list;
-    	 	pos = itr.pos;
-    	 }
-    	
-    	/**
-
-    	 * TODO ++ operator
-    	 */
-    	Iterator operator++()
-    	 {
-    	 	if (pos >= list->length)
-    	 	 throw IndexOutOfBound("The position of the Iterator is out of bound.");
-    	 	++pos;
-    	 	return *this;
-    	 }
-    	
-    	/**
-    	 * TODO -- operator
-
-    	 */
-    	Iterator operator--()
-    	 {
-    	 	if (pos <= 0)
-    	 	 throw IndexOutOfBound("The position of the Iterator is out of bound.");
-    	 	--pos;
-    	 	return *this;
-    	 }
-    	
-    	/**
-    	 * TODO -- operator
+    	 * TODO * operator
     	 */
     	T& operator*()
     	 {
-    	 	if (pos < 0 || pos >= list->length)
+    	 	if (pos < 0 || pos >= list->length || flag == false)
     	 	 throw IndexOutOfBound("The position of the Iterator is out of bound.");
     	 	return list->data[pos];
     	 }
@@ -127,9 +88,10 @@ public:
          */
         const T &next()
          {
-         	if (!hasNext())
+         	if (!hasNext() && pos>=-1)
          	 throw ElementNotExist("The element you want to visit does not exsit.");
-         	return (list->data[pos+1]);
+         	flag = true;
+         	return (list->data[++pos]);
          }
 
         /**
@@ -140,9 +102,11 @@ public:
          */
         void remove()
          {
-         	if ( pos<0 || pos >= list->length )
+         	if ( pos<0 || pos >= list->length || flag == false)
          	 throw ElementNotExist("The element you want to visit does not exsit.");
          	list->removeIndex(pos);
+         	--pos;
+         	flag = false;
          }
 	};
 
