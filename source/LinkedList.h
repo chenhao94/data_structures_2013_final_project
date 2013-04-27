@@ -73,9 +73,15 @@ public:
     	
     public:
     	/**
+    	 *	Construct an empty iterator.
+    	 */
+    	Iterator(): list(NULL), del(false), pos(NULL), nextPos(NULL) {}
+    	
+    	
+    	/**
     	 *	Construct a new iterator.
     	 */
-    	Iterator(const LinkedListPointer& li = NULL): list(li), del(false), pos(li->head), nextPos(li->head->next) {}
+    	Iterator(const LinkedListPointer& li): list(li), del(false), pos(li->head), nextPos(li->head->next) {}
     	
         /**
     	 * TODO * operator
@@ -132,7 +138,7 @@ public:
      	Size = 0;
      	if (head==NULL || rear==NULL) throw AllocationFailure("The operation 'new' is failed.");
      	head -> next = rear;
-     	rear -> next = head;
+     	rear -> prev = head;
      }
 
     /**
@@ -243,7 +249,7 @@ public:
      	if ( index<0 || index > Size )
      	 throw IndexOutOfBound("Index out of bound.");
      	nodePointer thisNow = head;
-     	for (int i=0; i<=index; ++i)
+     	for (int i=1; i<=index; ++i)
      	 thisNow = thisNow->next;
      	thisNow->add(element); /** @throw AllocationFailure; */
      	++Size;
@@ -273,8 +279,11 @@ public:
      {
      	nodePointer thisNow = head->next;
      	while (thisNow!=rear)
-     	 if (thisNow->data==e)
-     	  return true;
+     	 {
+     	 	if (thisNow->data==e)
+     	 	 return true;
+     	 	thisNow = thisNow->next;
+     	 }
      	return false;
      }
 
@@ -288,7 +297,7 @@ public:
      	if ( index<0 || index >= Size )
      	 throw IndexOutOfBound("Index out of bound.");
      	nodePointer thisNow = head->next;
-     	for (int i=0; i<=index; ++i)
+     	for (int i=1; i<=index; ++i)
      	 thisNow = thisNow->next;
      	return thisNow->data;
      }
@@ -330,7 +339,7 @@ public:
      	if ( index<0 || index >= Size )
      	 throw IndexOutOfBound("Index out of bound.");
      	nodePointer thisNow = head->next;
-     	for (int i=0; i<=index; ++i)
+     	for (int i=1; i<=index; ++i)
      	 thisNow = thisNow->next;
      	thisNow->remove();
      	--Size;
@@ -344,12 +353,15 @@ public:
      {
      	nodePointer thisNow = head->next;
      	while (thisNow!=rear)
-     	 if (thisNow->data==e)
-     	  {
-     	  	thisNow->remove();
-     	  	--Size;
-     	  	return true;
-     	  }
+     	 {
+     	 	if (thisNow->data==e)
+     	 	 {
+     	 	 	thisNow->remove();
+     	 	 	--Size;
+     	 	 	return true;
+     	 	 }
+     	 	thisNow = thisNow->next;
+     	 }
      	return false;
      }
 
@@ -387,7 +399,7 @@ public:
      	if ( index<0 || index >= Size )
      	 throw IndexOutOfBound("Index out of bound.");
      	nodePointer thisNow = head->next;
-     	for (int i=0; i<=index; ++i)
+     	for (int i=1; i<=index; ++i)
      	 thisNow = thisNow->next;
      	thisNow->data=element;
      }
