@@ -55,13 +55,13 @@ public:
     typedef ArrayList<T>* ArrayListPointer;
     
     private:
-    	ArrayList<T> *list;
+    	ArrayListPointer list;
     	T pos;
     	bool flag; // iff next() has been called, flag = true
     
     public:
     	/**
-    	 * TODO Constructs an new iterator.
+    	 * TODO Constructs a new iterator.
     	 */
     	Iterator(const ArrayListPointer& li = NULL): list(li), pos(-1), flag(false){}
     	
@@ -71,7 +71,7 @@ public:
     	T& operator*()
     	 {
     	 	if (pos < 0 || pos >= list->length || flag == false)
-    	 	 throw IndexOutOfBound("The position of the Iterator is out of bound.");
+    	 	 throw ElementNotExist("The element you want to visit does not exsit.");
     	 	return list->data[pos];
     	 }
     
@@ -79,7 +79,7 @@ public:
 
          * TODO Returns true if the iteration has more elements.
          */
-        bool hasNext() { return (pos+1<list->length); }
+        bool hasNext() { return (pos+1<list->length && pos>=-1); }
 
         /**
          * TODO Returns the next element in the iteration.
@@ -88,7 +88,7 @@ public:
          */
         const T &next()
          {
-         	if (!hasNext() && pos>=-1)
+         	if (!hasNext())
          	 throw ElementNotExist("The element you want to visit does not exsit.");
          	flag = true;
          	return (list->data[++pos]);
@@ -112,6 +112,7 @@ public:
 
     /**
      * TODO Constructs an empty array list.
+     * @throw AllocationFailure
      */
     ArrayList(): length(0), capacity(initialSize) 
      {
@@ -126,6 +127,7 @@ public:
 
     /**
      * TODO Assignment operator
+     * @throw AllocationFailure
      */
     ArrayList& operator=(const ArrayList& x)
      {
@@ -140,6 +142,7 @@ public:
     
     /**
      * TODO Copy-constructor
+     * @throw AllocationFailure
      */
     ArrayList(const ArrayList& x) : capacity(x.capacity), length(x.length)
      {
