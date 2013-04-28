@@ -3,6 +3,7 @@
 #define __TREEMAP_H
 
 #include "ElementNotExist.h"
+#include "BinaryNode.h"
 
 /**
  * TreeMap is the balanced-tree implementation of map. The iterators must
@@ -17,21 +18,11 @@ public:
         K key;
         V value;
     public:
-        Entry(K k, V v)
-        {
-            key = k;
-            value = v;
-        }
+        Entry(K k, V v): key(k), value(v) {}
 
-        K getKey()
-        {
-            return key;
-        }
+        K getKey() { return key; }
 
-        V getValue()
-        {
-            return value;
-        }
+        V getValue() { return value; }
     };
 
     class Iterator
