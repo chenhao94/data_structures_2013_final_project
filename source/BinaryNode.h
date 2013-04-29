@@ -119,6 +119,8 @@ template <class T>
 inline void BinaryNode<T>::leftRotate()
 {
 	BinaryNodePointer leftSon = l, father = f;
+	if (leftSon == NULL)
+	 throw ElementNotExist("No left son.");
 	l = leftSon->r;
 	if (leftSon->r->f != NULL)
 	 leftSon->r->f = this;
@@ -144,6 +146,8 @@ template <class T>
 inline void BinaryNode<T>::rightRotate()
 {
 	BinaryNodePointer rightSon = r, father = f;
+	if (rightSon == NULL)
+	 throw ElementNotExist("No right son.");
 	r = rightSon->l;
 	if (rightSon->l->f != NULL)
 	 rightSon->l->f = this;
