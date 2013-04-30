@@ -31,13 +31,13 @@ class BinaryNode
 	 *	Return a pointer of the previous node
 	 *	@throw ElementNotExist
 	 */
-	BinaryNodePointer prev() const;
+	BinaryNodePointer prev();
 	
 	/**
 	 *	Return a pointer of the next node
 	 *	@throw ElementNotExist
 	 */
-	BinaryNodePointer next() const;
+	BinaryNodePointer next();
 	
 	/** 
 	 *	Rotate the left son up
@@ -55,7 +55,7 @@ class BinaryNode
 	 *	Find a node with specified data in the subtree
 	 *	If that node not exists, return NULL
 	 */
-	BinaryNodePointer find( T elem ) const;
+	BinaryNodePointer find( T elem );
 	
 	/** the size of the subtree */
 	int size() const { return Size; }
@@ -68,7 +68,7 @@ class BinaryNode
  *	@throw ElementNotExist
  */
 template <class T>
-BinaryNode<T>* BinaryNode<T>::prev() const
+BinaryNode<T>* BinaryNode<T>::prev()
 {
 	BinaryNodePointer thisNow = this, thisFather = this->f;
 	if ( thisNow->l != NULL )
@@ -92,7 +92,7 @@ BinaryNode<T>* BinaryNode<T>::prev() const
  *	@throw ElementNotExist
  */
 template <class T>
-BinaryNode<T>* BinaryNode<T>::next() const
+BinaryNode<T>* BinaryNode<T>::next()
 {
 	BinaryNodePointer thisNow = this, thisFather = this->f;
 	if ( thisNow->r != NULL )
@@ -170,7 +170,7 @@ inline void BinaryNode<T>::rightRotate()
  *	If that node not exists, return NULL
  */
 template <class T>
-BinaryNode<T>* BinaryNode<T>::find( T elem ) const
+BinaryNode<T>* BinaryNode<T>::find( T elem )
 {
 	BinaryNode<T>* thisNow = this;
 	T nowData;
