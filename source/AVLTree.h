@@ -9,6 +9,16 @@
  *	Type 'T' need an opertor '<'
  */
 
+template<class T>
+class AVLTree;
+
+/**
+ *	Copy a AVL tree, return the pointer of the root
+ *	@throw AllocationFailure
+ */
+template <class T>
+AVLTree<T>* copyTree(AVLTree<T>* root);
+
 template<class T>	// Type 'T' need an opertor '<'
 class AVLNode
 {
@@ -73,6 +83,8 @@ class AVLNode
 	
 	/** the size of the subtree */
 	int size() const { return Size; }
+	
+	friend AVLTree<T>* copyTree<T>(AVLTree<T>*);
 };
 
 //-------------The end of AVLNode-----------------------------------
@@ -530,6 +542,25 @@ void AVLTree<T>::remove( const T& elem )
 	 	 }
 	 	pos = pos->f;
 	 }
+}
+
+/**
+ *	Copy a AVL tree, return the pointer of the root
+ *	@throw AllocationFailure
+ */
+template <class T>
+AVLTree<T>* copyTree(AVLTree<T>* root)
+{
+	if (root==NULL)
+	 return NULL;
+	AVLTree<T>* newNode = new AVLNode<T>(root->data);
+	AVLTree<T>* l=copyTree(root->l), r=copyTree(root->r);
+	newNode->l = l;
+	newNode->r = r;
+	if (l!=NULL)
+	 newNode->l->f = newNode;
+	if (r!=NULL)
+	 newNode->r->f = newNode;
 }
 
 #endif
