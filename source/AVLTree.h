@@ -21,7 +21,7 @@ class AVLNode
 	public:
 	
 	/** Construct a new node. */
-	AVLNode(const T& dat = 0) : data(dat), height(1), Size(1) {}
+	AVLNode(const T& dat = 0) : data(dat), height(1), Size(1), l(NULL), r(NULL), f(NULL) {}
 	
 	/** Destructor */
 	virtual ~AVLNode() {}
@@ -93,6 +93,9 @@ class AVLTree
 	
 	/** Destructor */
 	virtual ~AVLTree() { removeAll(root); }
+	
+	/** Removes all of the elements from this tree. */
+	void clear() { removeAll(root); root = NULL; }
 	
 	/**
 	 *	Add a element into the AVL tree
@@ -331,7 +334,7 @@ bool AVLNode<T>::removeMaintain()
 	 return true;
 	if (diff==-2)
 	 {
-	 	sonDiff = getHeight(l->l) - getHeight(l->r);
+	 	sonDiff = getHeight(r->l) - getHeight(r->r);
 	 	
 	 	if (sonDiff==0)				//	Q==0
 	 	 {
@@ -352,7 +355,7 @@ bool AVLNode<T>::removeMaintain()
 	 }
 	else if (diff==2)
 	 {
-	 	sonDiff = getHeight(r->l) - getHeight(r->r);
+	 	sonDiff = getHeight(l->l) - getHeight(l->r);
 	 	
 	 	if (sonDiff==0)				//	Q==0
 	 	 {
@@ -375,7 +378,7 @@ bool AVLNode<T>::removeMaintain()
 
 /** Remove all the nodes in the subtree. */
 template <class T>
-void removeAll(AVLNode<T>* node)
+void AVLTree<T>::removeAll(AVLNode<T>* node)
 {
 	if (node==NULL)
 	 return;
@@ -391,7 +394,8 @@ void removeAll(AVLNode<T>* node)
 template <class T>
 void AVLTree<T>::add( const T& elem )
 {
-	AVLNode<T>* newNode = new AVLNode<T>(elem), pos = root;
+	AVLNode<T>* newNode = new AVLNode<T>(elem);
+	AVLNode<T>* pos = root;
 	int diff, heightTmp;
 	if (newNode==NULL) throw AllocationFailure("The operation 'new' is failed.");
 	if (root==NULL)
@@ -401,12 +405,13 @@ void AVLTree<T>::add( const T& elem )
 	 }
 	while (1)
 	 {
-	 	++pos.Size;
+	 	++pos->Size;
 	 	if (elem<pos->data)
 	 	 {
 	 	 	if (pos->l==NULL)
 	 	 	 {
 	 	 	 	pos->l=newNode;
+	 	 	 	newNode->f=pos;
 	 	 	 	break;
 	 	 	 }
 	 	 	pos=pos->l;
@@ -416,6 +421,7 @@ void AVLTree<T>::add( const T& elem )
 	 	 	if (pos->r==NULL)
 	 	 	 {
 	 	 	 	pos->r=newNode;
+	 	 	 	newNode->f=pos;
 	 	 	 	break;
 	 	 	 }
 	 	 	pos=pos->r;
@@ -446,9 +452,10 @@ void AVLTree<T>::add( const T& elem )
 template <class T>
 void AVLTree<T>::remove( const T& elem )
 {
-	AVLNode<T>* node = find(elem), pos;
+	AVLNode<T>* node = find(elem);
+	AVLNode<T>* pos;
 	bool stop = false;
-	int diff, heightTmp;
+	int diff, fDiff, heightTmp;
 	
 	if (node==NULL)
 	 throw ElementNotExist("The element you want to remove does not exsit.");
@@ -473,25 +480,52 @@ void AVLTree<T>::remove( const T& elem )
 	 	 root=node->f;
 	 }
 	pos = node->f;
+	if (pos==NULL)
+	 {
+	 	root = NULL;
+	 	delete node;
+	 	return;
+	 }
 	if (pos->l==node)
 	 pos->l=NULL;
 	else
 	 pos->r=NULL;
+	maintainHeight(pos);
+	delete node;
+	
 	while (pos!=NULL)
 	 {
 	 	--pos->Size;
 	 	if (stop==false)
 	 	 {
-	 	 	heightTmp = pos->height;
-	 	 	maintainHeight(pos);
 	 	 	diff = getHeight(pos->l) - getHeight(pos->r);
-	 	 	if (heightTmp == pos->height && diff<2 && diff>-2)
+	 	 	if (pos->f==NULL)
+	 	 	 {
+	 	 	 	root = pos;
+	 	 	 	heightTmp = pos->height;
+	 	 		maintainHeight(pos);
+	 	 	 	if (diff>1 || diff<-1)
+	 	 	 	 pos->removeMaintain();
+	 	 	 	if (pos->f!=NULL) root = pos->f;
+	 	 	 	break;
+	 	 	 }
+	 	 	
+	 	 	heightTmp = pos->f->height;
+	 	 	maintainHeight(pos->f);
+	 	 	fDiff = getHeight(pos->f->l) - getHeight(pos->f->r);
+	 	 	
+	 	 	/** (heightTmp == pos->f->height && fDiff<2 && fDiff>-2) means no influence on the father node. */
+	 	 	if ((heightTmp == pos->f->height && fDiff<2 && fDiff>-2) && diff<2 && diff>-2)
 	 	 	 stop = true;
-	 	 	else if (heightTmp == pos->height)
+	 	 	else if (heightTmp == pos->f->height && fDiff<2 && fDiff>-2)
 	 	 	 {
 	 	 	 	stop = pos->removeMaintain();
 	 	 	 	if (pos->f->f==NULL)
-	 	 		 root = pos->f;
+	 	 		 {
+	 	 		 	root = pos->f;
+	 	 		 	break;
+	 	 		 }
+	 	 		pos = pos->f;
 	 	 	 }
 	 	 }
 	 	pos = pos->f;
