@@ -1,7 +1,6 @@
 #ifndef __AVLTREE_H__
 #define __AVLTREE_H__
 
-#include "AVLNode.h"
 #include "AllocationFailure.h"
 #include "ElementNotExist.h"
 
@@ -87,7 +86,7 @@ class AVLTree
 	public:
 	
 	/** Construct a new tree. */
-	AVLNode(): root(NULL);
+	AVLTree(): root(NULL) {}
 	
 	/** Remove all the nodes in the subtree. */
 	void removeAll(AVLNode<T>* node);
@@ -101,21 +100,24 @@ class AVLTree
 	 */
 	void add( const T& elem );
 	
-	/** Remove a specified element from the AVL tree */
-	void remove( const AVLNodePointer& node );
+	/** 
+	 *	Remove a specified element from the AVL tree
+	 *	@throw ElementNotExist
+	 */
+	void remove( const T& elem );
 	
 	/** 
 	 *	Find a node with specified data from the AVL tree
 	 *	If not exists, return NULL
 	 */
 	AVLNode<T>* find( const T& elem ) { return root->find(elem); }
-}
+};
 
 //-------------The end of AVLTree-----------------------------------
 
 /** Return height of the subtree. */
 template <class T>
-inline int getHeight(AVLNode<T>* root) const
+inline int getHeight(AVLNode<T>* root)
 {
 	if (root==NULL)
 	 return 0;
@@ -124,7 +126,7 @@ inline int getHeight(AVLNode<T>* root) const
 
 /** Maintain height of the subtree. */
 template <class T>
-inline void maintainHeight(AVLNode<T>* root) const
+inline void maintainHeight(AVLNode<T>* root)
 {
 	if (root==NULL)
 	 return;
@@ -429,17 +431,71 @@ void AVLTree<T>::add( const T& elem )
 	 	if (diff>1 || diff<-1)
 	 	 {
 	 	 	pos->addMaintain();
+	 	 	if (pos->f->f==NULL)
+	 	 	 root = pos->f;
 	 	 	break;
 	 	 }
 	 	pos = pos->f;
 	 }
 }
 
-/** Remove a specified element from the AVL tree */
+/** 
+ *	Remove a specified element from the AVL tree
+ *	@throw ElementNotExist
+ */
 template <class T>
-void AVLTree<T>::remove( const AVLNodePointer& node )
+void AVLTree<T>::remove( const T& elem )
 {
+	AVLNode<T>* node = find(elem), pos;
+	bool stop = false;
+	int diff, heightTmp;
 	
+	if (node==NULL)
+	 throw ElementNotExist("The element you want to remove does not exsit.");
+	
+	if (node->l!=NULL && node->r!=NULL)
+	 {
+	 	pos = node->l;
+	 	while (pos->r!=NULL) pos=pos->r;
+	 	node->data = pos->data;
+	 	node = pos;
+	 }
+	if (node->l!=NULL)
+	 {
+	 	node->leftRotate();
+	 	if (node==root)
+	 	 root=node->f;
+	 }
+	if (node->r!=NULL)
+	 {
+	 	node->rightRotate();
+	 	if (node==root)
+	 	 root=node->f;
+	 }
+	pos = node->f;
+	if (pos->l==node)
+	 pos->l=NULL;
+	else
+	 pos->r=NULL;
+	while (pos!=NULL)
+	 {
+	 	--pos->Size;
+	 	if (stop==false)
+	 	 {
+	 	 	heightTmp = pos->height;
+	 	 	maintainHeight(pos);
+	 	 	diff = getHeight(pos->l) - getHeight(pos->r);
+	 	 	if (heightTmp == pos->height && diff<2 && diff>-2)
+	 	 	 stop = true;
+	 	 	else if (heightTmp == pos->height)
+	 	 	 {
+	 	 	 	stop = pos->removeMaintain();
+	 	 	 	if (pos->f->f==NULL)
+	 	 		 root = pos->f;
+	 	 	 }
+	 	 }
+	 	pos = pos->f;
+	 }
 }
 
 #endif
