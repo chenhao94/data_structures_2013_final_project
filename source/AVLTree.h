@@ -108,8 +108,8 @@ class AVLNode
 	
 	friend class AVLTree<T>;
 	friend AVLNode<T>* copyTree<T>(AVLNode<T>*);
-	friend inline int getHeight<T>(AVLNode<T>* root);
-	friend inline void maintainHeight<T>(AVLNode<T>* root);
+	friend int getHeight<T>(AVLNode<T>* root);
+	friend void maintainHeight<T>(AVLNode<T>* root);
 };
 
 //-------------The end of AVLNode-----------------------------------
@@ -129,10 +129,10 @@ class AVLTree
 	void removeAll(AVLNode<T>* node);
 	
 	/** Destructor */
-	virtual ~AVLTree() { removeAll(root); }
+	virtual ~AVLTree() { if (root!=NULL) removeAll(root); }
 	
 	/** Removes all of the elements from this tree. */
-	void clear() { removeAll(root); root = NULL; }
+	void clear() { if (root!=NULL) removeAll(root); root = NULL; }
 	
 	/**
 	 *	Add a element into the AVL tree
@@ -593,6 +593,7 @@ AVLNode<T>* copyTree(AVLNode<T>* root)
 	if (root==NULL)
 	 return NULL;
 	AVLNode<T>* newNode = new AVLNode<T>(root->data);
+	if (newNode==NULL) throw AllocationFailure("The operation 'new' is failed.");
 	AVLNode<T>* l=copyTree(root->l), *r=copyTree(root->r);
 	newNode->l = l;
 	newNode->r = r;
@@ -600,7 +601,7 @@ AVLNode<T>* copyTree(AVLNode<T>* root)
 	 newNode->l->f = newNode;
 	if (r!=NULL)
 	 newNode->r->f = newNode;
-	return NULL;
+	return newNode;
 }
 
 #endif

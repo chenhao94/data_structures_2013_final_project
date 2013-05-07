@@ -21,9 +21,9 @@ public:
     public:
         Entry(K k=0, V v=0): key(k), value(v) {}
 
-        K getKey() { return key; }
+        K getKey() const { return key; }
 
-        V getValue() { return value; }
+        V getValue() const { return value; }
         
         bool operator< (const Entry& x) const { return (key<x.key); }
         
@@ -60,8 +60,9 @@ public:
 
     /**
      * TODO Constructs an empty tree map.
+     * @throw AllocationFailure
      */
-    TreeMap(): tree() { }
+    TreeMap(): tree(new AVLTree<Entry>) { if (tree==NULL) throw AllocationFailure("The operation 'new' is failed."); }
 
     /**
      * TODO Destructor
@@ -70,13 +71,16 @@ public:
 
     /**
      * TODO Assignment operator
+     * @throw AllocationFailure
      */
     TreeMap &operator=(const TreeMap &x) { tree->clear(); tree->getRoot() = copyTree<Entry>(x.tree->getRoot()); }
 
     /**
      * TODO Copy-constructor
+     * @throw AllocationFailure
      */
-    TreeMap(const TreeMap &x) { tree->getRoot() = copyTree<Entry>(x.tree->getRoot()); }
+    TreeMap(const TreeMap &x): tree(new AVLTree<Entry>) { if (tree==NULL) throw AllocationFailure("The operation 'new' is failed."); 
+    													  tree->getRoot() = copyTree<Entry>(x.tree->getRoot()); }
 
     /**
      * TODO Returns an iterator over the elements in this map.
