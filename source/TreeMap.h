@@ -19,7 +19,7 @@ public:
         K key;
         V value;
     public:
-        Entry(K k, V v): key(k), value(v) {}
+        Entry(K k=0, V v=0): key(k), value(v) {}
 
         K getKey() { return key; }
 
@@ -28,6 +28,8 @@ public:
         bool operator< (const Entry& x) const { return (key<x.key); }
         
         bool operator== (const Entry& x) const { return (key==x.key); }
+        
+        friend class TreeMap<K,V>;
     };
 private:
 AVLTree<Entry>* tree;
@@ -42,7 +44,7 @@ public:
     
     public:
     	/** Construct a new iterator */
-    	Iterator(AVLTree<Entry>* t): tree(t), pos(NULL) {}
+    	Iterator(AVLTree<Entry>* t=NULL): tree(t), pos(NULL) {}
     
         /**
          * TODO Returns true if the iteration has more elements.
@@ -69,12 +71,12 @@ public:
     /**
      * TODO Assignment operator
      */
-    TreeMap &operator=(const TreeMap &x) { tree->root = copyTree(x->tree->root); }
+    TreeMap &operator=(const TreeMap &x) { tree->clear(); tree->getRoot() = copyTree<Entry>(x.tree->getRoot()); }
 
     /**
      * TODO Copy-constructor
      */
-    TreeMap(const TreeMap &x) { tree->clear(); tree->root = copyTree(x->tree->root); }
+    TreeMap(const TreeMap &x) { tree->getRoot() = copyTree<Entry>(x.tree->getRoot()); }
 
     /**
      * TODO Returns an iterator over the elements in this map.
@@ -97,19 +99,19 @@ public:
     /**
      * TODO Returns true if this map maps one or more keys to the specified value.
      */
-    bool containsValue(const V &value) const { return findValue(tree->root,value); }
+    bool containsValue(const V &value) { return findValue(tree->getRoot(),value); }
 
     /**
      * TODO Returns a const reference to the value to which the specified key is mapped.
      * If the key is not present in this map, this function should throw ElementNotExist exception.
      * @throw ElementNotExist
      */
-    const V &get(const K &key) const { Entry ent(key,0); return tree->find(ent)->data.value; }
+    const V &get(const K &key) const { Entry ent(key,0); return tree->find(ent)->get().value; }
 
     /**
      * TODO Returns true if this map contains no key-value mappings.
      */
-    bool isEmpty() const { return (tree->root==NULL); }
+    bool isEmpty() const { return (tree->getRoot()==NULL); }
 
     /**
      * TODO Associates the specified value with the specified key in this map.
@@ -127,7 +129,7 @@ public:
     /**
      * TODO Returns the number of key-value mappings in this map.
      */
-    int size() const { return tree->root->size(); }
+    int size() const { return tree->getRoot()->size(); }
 };
 
 /**
@@ -136,7 +138,7 @@ public:
 template<class K, class V>
 inline bool TreeMap<K,V>::Iterator::hasNext()
 {
-   	if (tree->root==NULL)
+   	if (tree->getRoot()==NULL)
    	 return false;
    	if (pos==NULL)
    	 return true;
@@ -155,13 +157,11 @@ inline bool TreeMap<K,V>::Iterator::hasNext()
 template<class K, class V>
 inline const typename TreeMap<K,V>::Entry& TreeMap<K,V>::Iterator::next()
 {
-	if (tree->root==NULL)
+	if (tree->getRoot()==NULL)
 	 throw ElementNotExist("There is no element in the map.");
 	if (pos==NULL)
 	 {
-	 	pos=tree->root;
-	 	while (pos->l!=NULL)
-	 	 pos = pos->l;
+	 	pos=tree->getRoot()->getFirst();
 	 	return pos->get();
 	 }
 	pos = pos->next();
@@ -174,9 +174,9 @@ bool TreeMap<K,V>::findValue(AVLNode<TreeMap<K,V>::Entry>* root, V v)
 {
 	if (root==NULL)
 	 return false;
-	if (root->data.value==v)
+	if (root->get().value==v)
 	 return true;
-	return (findValue(root->l,v) || (findValue(root->r,v)));
+	return (findValue(root->getL(),v) || (findValue(root->getR(),v)));
 }
 
 #endif

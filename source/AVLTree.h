@@ -12,12 +12,23 @@
 template<class T>
 class AVLTree;
 
+template<class T>
+class AVLNode;
+
 /**
  *	Copy a AVL tree, return the pointer of the root
  *	@throw AllocationFailure
  */
 template <class T>
-AVLTree<T>* copyTree(AVLTree<T>* root);
+AVLNode<T>* copyTree(AVLNode<T>* root);
+
+/** Return height of the subtree. */
+template <class T>
+inline int getHeight(AVLNode<T>* root);
+
+/** Maintain height of the subtree. */
+template <class T>
+inline void maintainHeight(AVLNode<T>* root);
 
 template<class T>	// Type 'T' need an opertor '<'
 class AVLNode
@@ -39,6 +50,12 @@ class AVLNode
 	/** Return a const reference to the element */
 	const T& get() const { return data; }
 	
+	/** Return a reference to the left son */
+	AVLNodePointer& getL() { return l; }
+	
+	/** Return a reference to the right son */
+	AVLNodePointer& getR() { return r; }
+	
 	/**
 	 *	Return a pointer of the previous node
 	 *	@throw ElementNotExist
@@ -50,6 +67,11 @@ class AVLNode
 	 *	@throw ElementNotExist
 	 */
 	AVLNodePointer next();
+	
+	/**
+	 *	Return the 1st pointer of the subtree
+	 */
+	AVLNodePointer getFirst();
 	
 	/** 
 	 *	Rotate the left son up
@@ -84,7 +106,10 @@ class AVLNode
 	/** the size of the subtree */
 	int size() const { return Size; }
 	
-	friend AVLTree<T>* copyTree<T>(AVLTree<T>*);
+	friend class AVLTree<T>;
+	friend AVLNode<T>* copyTree<T>(AVLNode<T>*);
+	friend inline int getHeight<T>(AVLNode<T>* root);
+	friend inline void maintainHeight<T>(AVLNode<T>* root);
 };
 
 //-------------The end of AVLNode-----------------------------------
@@ -126,6 +151,9 @@ class AVLTree
 	 *	If not exists, return NULL
 	 */
 	AVLNode<T>* find( const T& elem ) { return root->find(elem); }
+	
+	/** Return the reference of root of the tree */
+	AVLNode<T>* &getRoot() { return root; }
 };
 
 //-------------The end of AVLTree-----------------------------------
@@ -196,6 +224,15 @@ AVLNode<T>* AVLNode<T>::next()
 	 	thisFather = thisFather->f;
 	 }
 	throw ElementNotExist("The element is the largest in the map.");
+}
+
+/**	Return the 1st pointer of the subtree */
+template <class T>
+AVLNode<T>* AVLNode<T>::getFirst()
+{
+	AVLNodePointer thisNow = this;
+	while (thisNow->l != NULL) thisNow = thisNow->l;
+	 return thisNow;
 }
 
 /** 
@@ -332,6 +369,7 @@ bool AVLNode<T>::addMaintain()
 	 	 	return true;
 	 	 }
 	 }
+	return false;
 }
 
 /** 
@@ -386,6 +424,7 @@ bool AVLNode<T>::removeMaintain()
 	 	 	return false;
 	 	 }
 	 }
+	return false;
 }
 
 /** Remove all the nodes in the subtree. */
@@ -549,18 +588,19 @@ void AVLTree<T>::remove( const T& elem )
  *	@throw AllocationFailure
  */
 template <class T>
-AVLTree<T>* copyTree(AVLTree<T>* root)
+AVLNode<T>* copyTree(AVLNode<T>* root)
 {
 	if (root==NULL)
 	 return NULL;
-	AVLTree<T>* newNode = new AVLNode<T>(root->data);
-	AVLTree<T>* l=copyTree(root->l), r=copyTree(root->r);
+	AVLNode<T>* newNode = new AVLNode<T>(root->data);
+	AVLNode<T>* l=copyTree(root->l), *r=copyTree(root->r);
 	newNode->l = l;
 	newNode->r = r;
 	if (l!=NULL)
 	 newNode->l->f = newNode;
 	if (r!=NULL)
 	 newNode->r->f = newNode;
+	return NULL;
 }
 
 #endif
