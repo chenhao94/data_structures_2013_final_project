@@ -19,7 +19,9 @@ public:
         K key;
         V value;
     public:
-        Entry(K k=0, V v=0): key(k), value(v) {}
+    	Entry() {}
+    
+        Entry(K k, V v): key(k), value(v) {}
 
         K getKey() const { return key; }
 

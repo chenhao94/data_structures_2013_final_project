@@ -6,7 +6,7 @@
 
 /**
  *	An AVL tree.
- *	Type 'T' need an opertor '<'
+ *	Type 'T' need opertors '<' and '=='
  */
 
 template<class T>
@@ -30,7 +30,7 @@ inline int getHeight(AVLNode<T>* root);
 template <class T>
 inline void maintainHeight(AVLNode<T>* root);
 
-template<class T>	// Type 'T' need an opertor '<'
+template<class T>	// Type 'T' need opertors '<' and '=='
 class AVLNode
 {
 	typedef AVLNode<T>* AVLNodePointer;
