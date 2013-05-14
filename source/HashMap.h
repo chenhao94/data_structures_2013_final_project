@@ -74,6 +74,7 @@ private:
 	static const int initialSize = 100;
 	long capacity, Size;
 	Entry* storage;
+	H hash;
 	
 	/**
      *	TODO Double the capacity of the container.
@@ -209,7 +210,7 @@ inline bool HashMap<K,V,H>::doubleSize()
    	for (int i=0; i<oldCap ;++i)
    	 if (tmp[i].getFlag()==true)
    	  {
-   	  	pos = H.hashCode(tmp[i].getKey)%capacity;
+   	  	pos = hash.hashCode(tmp[i].key)%capacity;
    	  	for (; storage[pos].getFlag==true; pos=(pos+1)%capacity);
    	  	storage[pos]=tmp[i];
    	  }
@@ -225,7 +226,7 @@ template <class K, class V, class H>
 inline bool HashMap<K,V,H>::Iterator::hasNext()
 {
 	long cap = list->capacity;
-	HashMap<K,V,H>::Entry *tmp = storage;
+	HashMap<K,V,H>::Entry *tmp = this->storage;
 	for (long i=list->pos+1; i<cap; ++i)
 	 if (tmp[i].getFlag()==true)
 	  return true;
@@ -237,10 +238,10 @@ inline bool HashMap<K,V,H>::Iterator::hasNext()
  * @throw ElementNotExist exception when hasNext() == false
  */
 template <class K, class V, class H>
-inline const Entry& HashMap<K,V,H>::Iterator::next()
+inline const typename HashMap<K,V,H>::Entry& HashMap<K,V,H>::Iterator::next()
 {
 	long cap = list->capacity;
-	HashMap<K,V,H>::Entry *tmp = storage;
+	HashMap<K,V,H>::Entry *tmp = this->storage;
 	for (long i=list->pos+1; i<cap; ++i)
 	 if (tmp[i].getFlag()==true)
 	  return tmp[i];
@@ -263,9 +264,9 @@ inline HashMap<K,V,H>::HashMap(): Size(0), capacity(initialSize)
  * @throw AllocationFailure
  */
 template <class K, class V, class H>
-inline HashMap& HashMap<K,V,H>::operator=(const HashMap &x)
+inline HashMap<K,V,H>& HashMap<K,V,H>::operator=(const HashMap &x)
 {
-	delete storage[];
+	delete[] storage;
 	capacity=x.capacity;
    	Size=x.Size;
    	storage = new HashMap<K,V,H>::Entry[capacity];
@@ -314,7 +315,7 @@ inline void HashMap<K,V,H>::clear()
 template <class K, class V, class H>
 inline bool HashMap<K,V,H>::containsKey(const K &key) const
 {
-	long pos = H.hashCode(tmp[i].getKey)%capacity;
+	long pos = hash.hashCode(key)%capacity;
    	for (; storage[pos].flag==true ; pos=(pos+1)%capacity)
    	 if (storage[pos].key==key)
    	  return true;
@@ -328,7 +329,7 @@ template <class K, class V, class H>
 inline bool HashMap<K,V,H>::containsValue(const V &value) const
 {
 	for (long i=0; i<capacity; ++i)
-   	 if (storage[pos].flag==true && storage[pos].value==value)
+   	 if (storage[i].flag==true && storage[i].value==value)
    	  return true;
    	return false;
 }
@@ -341,7 +342,7 @@ inline bool HashMap<K,V,H>::containsValue(const V &value) const
 template <class K, class V, class H>
 inline const V& HashMap<K,V,H>::get(const K &key) const
 {
-	long pos = H.hashCode(tmp[i].getKey)%capacity;
+	long pos = hash.hashCode(key)%capacity;
    	for (; storage[pos].flag==true ; pos=(pos+1)%capacity)
    	 if (storage[pos].key==key)
    	  return storage[pos].value;
@@ -357,7 +358,7 @@ inline void HashMap<K,V,H>::put(const K &key, const V &value)
 {
 	HashMap<K,V,H>::Entry element(key,value);
 	if (Size >= capacity/2 && doubleSize()==false) throw AllocationFailure("The operation 'new' is failed.");
-	long pos = H.hashCode(key)%capacity;
+	long pos = hash.hashCode(key)%capacity;
    	++Size;
 	for (; storage[pos].flag==true; pos=(pos+1)%capacity);
    	storage[pos]=element;
@@ -371,7 +372,7 @@ inline void HashMap<K,V,H>::put(const K &key, const V &value)
 template <class K, class V, class H>
 inline void HashMap<K,V,H>::remove(const K &key)
 {
-	long pos = H.hashCode(key)%capacity, nowPos;
+	long pos = hash.hashCode(key)%capacity, nowPos;
 	int hashInt;
    	for (nowPos=pos; storage[nowPos].flag==true; nowPos=(nowPos+1)%capacity)
    	 if (storage[nowPos].key==key)
@@ -381,7 +382,7 @@ inline void HashMap<K,V,H>::remove(const K &key)
    	storage[pos].flag=false;
    	for (nowPos=pos+1; storage[nowPos].flag==true; nowPos=(nowPos+1)%capacity)
    	 {
-   	 	hashInt = H.hashCode(storage[nowPos].key)%capacity;
+   	 	hashInt = hash.hashCode(storage[nowPos].key)%capacity;
    	 	if (hashInt<=pos)
    	 	 {
    	 	 	storage[pos] = storage[nowPos];
