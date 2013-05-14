@@ -36,7 +36,7 @@ public:
     
     private:
     	ArrayListPointer list;
-    	T pos;
+    	long pos;
     	bool flag; // iff next() has been called, flag = true
     
     public:
@@ -179,7 +179,11 @@ inline bool ArrayList<T>::doubleSize()
    	try
    	 {
    		data = new T[capacity];
-   		if (data == NULL) throw AllocationFailure("The operation 'new' is failed.");
+   		if (data == NULL)
+   		 {
+   		 	data = tmp;
+   		 	throw AllocationFailure("The operation 'new' is failed.");
+   		 }
    	 }
    	catch (AllocationFailure error) { return false; }
 	
