@@ -74,7 +74,7 @@ private:
 	static const int initialSize = 100;
 	long capacity, Size;
 	Entry* storage;
-	H hash;
+	static H hash;
 	
 	/**
      *	TODO Double the capacity of the container.
@@ -136,7 +136,7 @@ public:
     /**
      * TODO Returns an iterator over the elements in this map.
      */
-    inline Iterator iterator() const;
+    inline Iterator iterator();
 
     /**
      * TODO Removes all of the mappings from this map.
@@ -211,7 +211,7 @@ inline bool HashMap<K,V,H>::doubleSize()
    	 if (tmp[i].getFlag()==true)
    	  {
    	  	pos = hash.hashCode(tmp[i].key)%capacity;
-   	  	for (; storage[pos].getFlag==true; pos=(pos+1)%capacity);
+   	  	for (; storage[pos].flag==true; pos=(pos+1)%capacity);
    	  	storage[pos]=tmp[i];
    	  }
    	
@@ -241,10 +241,13 @@ template <class K, class V, class H>
 inline const typename HashMap<K,V,H>::Entry& HashMap<K,V,H>::Iterator::next()
 {
 	long cap = list->capacity;
-	HashMap<K,V,H>::Entry *tmp = this->storage;
-	for (long i=list->pos+1; i<cap; ++i)
+	HashMap<K,V,H>::Entry *tmp = list->storage;
+	for (long i=pos+1; i<cap; ++i)
 	 if (tmp[i].getFlag()==true)
-	  return tmp[i];
+	  {
+	  	pos=i;
+	  	return tmp[i];
+	  }
 	throw ElementNotExist("The element you want to visit does not exsit.");
 }
 
@@ -292,7 +295,7 @@ inline HashMap<K,V,H>::HashMap(const HashMap &x): capacity(x.capacity), Size(x.S
  * TODO Returns an iterator over the elements in this map.
  */
 template <class K, class V, class H>
-inline class HashMap<K,V,H>::Iterator HashMap<K,V,H>::iterator() const
+inline class HashMap<K,V,H>::Iterator HashMap<K,V,H>::iterator()
 {
 	Iterator itr(this);
   	return itr;
