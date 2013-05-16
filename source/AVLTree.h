@@ -42,7 +42,7 @@ class AVLNode
 	public:
 	
 	/** Construct a new node. */
-	AVLNode(const T& dat = 0) : data(dat), height(1), Size(1), l(NULL), r(NULL), f(NULL) {}
+	AVLNode(const T& dat) : data(dat), height(1), Size(1), l(NULL), r(NULL), f(NULL) {}
 	
 	/** Destructor */
 	virtual ~AVLNode() {}

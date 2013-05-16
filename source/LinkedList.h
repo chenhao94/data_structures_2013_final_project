@@ -25,9 +25,14 @@ private:
 	 	nodePointer prev, next;
 	 	
 	 	/**
+	 	 *	Construct an empty node
+	 	 */
+	 	node(): prev(NULL), next(NULL){}
+	 	
+	 	/**
 	 	 *	Construct a new node
 	 	 */
-	 	node(const T& dat = 0, const nodePointer& pre = NULL, const nodePointer& nex = NULL): data(dat), prev(pre), next(nex){}
+	 	node(const T& dat , const nodePointer& pre = NULL, const nodePointer& nex = NULL): data(dat), prev(pre), next(nex){}
 	 	
 	 	/**
 		 *	Remove the element pointed by a pointer from the list

@@ -20,7 +20,9 @@ public:
         V value;
     public:
     	Entry() {}
-    
+		
+		Entry(K k) :key(k) {}
+		
         Entry(K k, V v): key(k), value(v) {}
 
         K getKey() const { return key; }
@@ -97,7 +99,7 @@ public:
     /**
      * TODO Returns true if this map contains a mapping for the specified key.
      */
-    bool containsKey(const K &key) const { Entry ent(key,0); return (tree->find(ent)!=NULL); }
+    bool containsKey(const K &key) const { Entry ent(key); return (tree->find(ent)!=NULL); }
 
     /** Search specified value in the subtree, if exists, return true */
     bool findValue(AVLNode<Entry>* root, V v);
@@ -112,7 +114,7 @@ public:
      * If the key is not present in this map, this function should throw ElementNotExist exception.
      * @throw ElementNotExist
      */
-    const V &get(const K &key) const { Entry ent(key,0); return tree->find(ent)->get().value; }
+    const V &get(const K &key) const { Entry ent(key); return tree->find(ent)->get().value; }
 
     /**
      * TODO Returns true if this map contains no key-value mappings.
@@ -130,7 +132,7 @@ public:
      * If there is no mapping for the specified key, throws ElementNotExist exception.
      * @throw ElementNotExist
      */
-    void remove(const K &key) { Entry ent(key,0); tree->remove(ent); }
+    void remove(const K &key) { Entry ent(key); tree->remove(ent); }
 
     /**
      * TODO Returns the number of key-value mappings in this map.
