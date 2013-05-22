@@ -226,8 +226,8 @@ template <class K, class V, class H>
 inline bool HashMap<K,V,H>::Iterator::hasNext()
 {
 	long cap = list->capacity;
-	HashMap<K,V,H>::Entry *tmp = this->storage;
-	for (long i=list->pos+1; i<cap; ++i)
+	HashMap<K,V,H>::Entry *tmp = list->storage;
+	for (long i=pos+1; i<cap; ++i)
 	 if (tmp[i].getFlag()==true)
 	  return true;
 	return false;
@@ -361,6 +361,7 @@ inline void HashMap<K,V,H>::put(const K &key, const V &value)
 {
 	HashMap<K,V,H>::Entry element(key,value);
 	if (Size >= capacity/2 && doubleSize()==false) throw AllocationFailure("The operation 'new' is failed.");
+	try { remove(key); } catch (ElementNotExist error) {}
 	long pos = hash.hashCode(key)%capacity;
    	++Size;
 	for (; storage[pos].flag==true; pos=(pos+1)%capacity);

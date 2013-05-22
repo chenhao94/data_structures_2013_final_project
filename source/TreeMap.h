@@ -125,7 +125,8 @@ public:
      * TODO Associates the specified value with the specified key in this map.
      * @throw AllocationFailure
      */
-    void put(const K &key, const V &value) { Entry ent(key,value); tree->add(ent); }
+    void put(const K &key, const V &value) { try { remove(key); } catch (ElementNotExist error) {}
+	 Entry ent(key,value); tree->add(ent); }
 
     /**
      * TODO Removes the mapping for the specified key from this map if present.
@@ -137,7 +138,7 @@ public:
     /**
      * TODO Returns the number of key-value mappings in this map.
      */
-    int size() const { return tree->getRoot()->size(); }
+    int size() const { return ( (tree->getRoot()!=NULL) ? (tree->getRoot()->size()) : 0 ); }
 };
 
 /**
