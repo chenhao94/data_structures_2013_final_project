@@ -61,9 +61,9 @@ public:
             flag=true;
         }
 
-        K getKey() const { return key; }
+        const K& getKey() const { return key; }
 
-        V getValue() const { return value; }
+        const V& getValue() const { return value; }
         
         bool getFlag() const { return flag; }
         
@@ -85,18 +85,17 @@ private:
 public:
     class Iterator
     {
-    
-    typedef HashMap<K,V,H>* HashMapPointer;
+    typedef const HashMap<K,V,H>* const_HashMapPointer;
     
     private:
-    	HashMapPointer list;
+    	const_HashMapPointer list;
     	long pos;
     
     public:
     	/**
     	 * TODO Constructs a new iterator.
     	 */
-    	Iterator(const HashMapPointer& li = NULL): list(li), pos(-1) {}
+    	Iterator(const const_HashMapPointer& li = NULL): list(li), pos(-1) {}
 
         /**
          * TODO Returns true if the iteration has more elements.
@@ -119,7 +118,7 @@ public:
     /**
      * TODO Destructor
      */
-    ~HashMap() { delete[] storage; }
+    virtual ~HashMap() { delete[] storage; }
 
     /**
      * TODO Assignment operator
@@ -136,7 +135,7 @@ public:
     /**
      * TODO Returns an iterator over the elements in this map.
      */
-    inline Iterator iterator();
+    inline Iterator iterator() const;
 
     /**
      * TODO Removes all of the mappings from this map.
@@ -295,7 +294,7 @@ inline HashMap<K,V,H>::HashMap(const HashMap &x): capacity(x.capacity), Size(x.S
  * TODO Returns an iterator over the elements in this map.
  */
 template <class K, class V, class H>
-inline class HashMap<K,V,H>::Iterator HashMap<K,V,H>::iterator()
+inline class HashMap<K,V,H>::Iterator HashMap<K,V,H>::iterator() const
 {
 	Iterator itr(this);
   	return itr;

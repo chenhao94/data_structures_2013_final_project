@@ -30,10 +30,13 @@ inline int getHeight(AVLNode<T>* root);
 template <class T>
 inline void maintainHeight(AVLNode<T>* root);
 
+
+
 template<class T>	// Type 'T' need opertors '<' and '=='
 class AVLNode
 {
 	typedef AVLNode<T>* AVLNodePointer;
+	typedef const AVLNode<T>* const_AVLNodePointer;
 	private:
 	T data;
 	AVLNodePointer l,r,f; // left subtree, right subtree and father
@@ -51,27 +54,27 @@ class AVLNode
 	const T& get() const { return data; }
 	
 	/** Return a reference to the left son */
-	AVLNodePointer& getL() { return l; }
+	const AVLNodePointer& getL() { return l; }
 	
 	/** Return a reference to the right son */
-	AVLNodePointer& getR() { return r; }
+	const AVLNodePointer& getR() { return r; }
 	
 	/**
-	 *	Return a pointer of the previous node
+	 *	Return a const pointer of the previous node
 	 *	@throw ElementNotExist
 	 */
-	AVLNodePointer prev();
+	const_AVLNodePointer prev() const;
 	
 	/**
-	 *	Return a pointer of the next node
+	 *	Return a const pointer of the next node
 	 *	@throw ElementNotExist
 	 */
-	AVLNodePointer next();
+	const_AVLNodePointer next() const;
 	
 	/**
-	 *	Return the 1st pointer of the subtree
+	 *	Return a const pointer of the 1st node of the subtree
 	 */
-	AVLNodePointer getFirst();
+	const_AVLNodePointer getFirst() const;
 	
 	/** 
 	 *	Rotate the left son up
@@ -150,10 +153,13 @@ class AVLTree
 	 *	Find a node with specified data from the AVL tree
 	 *	If not exists, return NULL
 	 */
-	AVLNode<T>* find( const T& elem ) { return root->find(elem); }
+	typename AVLNode<T>::AVLNodePointer find( const T& elem ) { return root->find(elem); }
 	
 	/** Return the reference of root of the tree */
-	AVLNode<T>* &getRoot() { return root; }
+	typename AVLNode<T>::AVLNodePointer& getRoot() { return root; }
+	
+	/** Return a const pointer of root of the tree */
+	typename AVLNode<T>::const_AVLNodePointer getRoot() const { return root; }
 };
 
 //-------------The end of AVLTree-----------------------------------
@@ -183,9 +189,9 @@ inline void maintainHeight(AVLNode<T>* root)
  *	@throw ElementNotExist
  */
 template <class T>
-AVLNode<T>* AVLNode<T>::prev()
+typename AVLNode<T>::const_AVLNodePointer AVLNode<T>::prev() const
 {
-	AVLNodePointer thisNow = this, thisFather = this->f;
+	const_AVLNodePointer thisNow = this, thisFather = this->f;
 	if ( thisNow->l != NULL )
 	 {
 	 	thisNow = thisNow->l;
@@ -207,9 +213,9 @@ AVLNode<T>* AVLNode<T>::prev()
  *	@throw ElementNotExist
  */
 template <class T>
-AVLNode<T>* AVLNode<T>::next()
+typename AVLNode<T>::const_AVLNodePointer AVLNode<T>::next() const
 {
-	AVLNodePointer thisNow = this, thisFather = this->f;
+	const_AVLNodePointer thisNow = this, thisFather = this->f;
 	if ( thisNow->r != NULL )
 	 {
 	 	thisNow = thisNow->r;
@@ -228,9 +234,9 @@ AVLNode<T>* AVLNode<T>::next()
 
 /**	Return the 1st pointer of the subtree */
 template <class T>
-AVLNode<T>* AVLNode<T>::getFirst()
+typename AVLNode<T>::const_AVLNodePointer AVLNode<T>::getFirst() const
 {
-	AVLNodePointer thisNow = this;
+	const_AVLNodePointer thisNow = this;
 	while (thisNow->l != NULL) thisNow = thisNow->l;
 	 return thisNow;
 }

@@ -25,9 +25,9 @@ public:
 		
         Entry(K k, V v): key(k), value(v) {}
 
-        K getKey() const { return key; }
+        const K& getKey() const { return key; }
 
-        V getValue() const { return value; }
+        const V& getValue() const { return value; }
         
         bool operator< (const Entry& x) const { return (key<x.key); }
         
@@ -43,12 +43,12 @@ public:
     {
     private:
     
-    AVLTree<Entry>* tree;
-    AVLNode<Entry>* pos; //	when pos==NULL, it means the next element pointed by iterator is the first in the map.
+    const AVLTree<Entry>* tree;
+    const AVLNode<Entry>* pos; //	when pos==NULL, it means the next element pointed by iterator is the first in the map.
     
     public:
     	/** Construct a new iterator */
-    	Iterator(AVLTree<Entry>* t=NULL): tree(t), pos(NULL) {}
+    	Iterator(const AVLTree<Entry>* t=NULL): tree(t), pos(NULL) {}
     
         /**
          * TODO Returns true if the iteration has more elements.
@@ -102,12 +102,12 @@ public:
     bool containsKey(const K &key) const { Entry ent(key); return (tree->find(ent)!=NULL); }
 
     /** Search specified value in the subtree, if exists, return true */
-    bool findValue(AVLNode<Entry>* root, V v);
+    bool findValue(AVLNode<Entry>* root, V v) const;
     
     /**
      * TODO Returns true if this map maps one or more keys to the specified value.
      */
-    bool containsValue(const V &value) { return findValue(tree->getRoot(),value); }
+    bool containsValue(const V &value) const { return findValue(tree->getRoot(),value); }
 
     /**
      * TODO Returns a const reference to the value to which the specified key is mapped.
@@ -179,7 +179,7 @@ inline const typename TreeMap<K,V>::Entry& TreeMap<K,V>::Iterator::next()
 
 /** Search specified value in the subtree, if exists, return true */
 template<class K,class V>
-bool TreeMap<K,V>::findValue(AVLNode<TreeMap<K,V>::Entry>* root, V v)
+bool TreeMap<K,V>::findValue(AVLNode<TreeMap<K,V>::Entry>* root, V v) const
 {
 	if (root==NULL)
 	 return false;
