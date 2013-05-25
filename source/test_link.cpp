@@ -1,10 +1,10 @@
 #include <iostream>
 #include <cstdio> 
 #include <string>
-#include "ArrayList.h"
+#include "LinkedList.h"
 using namespace std;
 
-void print(ArrayList<string> a)
+void print(LinkedList<string> a)
 {
 	cout << "Get & Size:           ";
 	for (int i=0; i<a.size(); ++i)
@@ -12,7 +12,7 @@ void print(ArrayList<string> a)
 	cout << endl;
 	
 	cout << "Iterator:             ";
-	ArrayList<string>::Iterator itr=a.iterator();
+	LinkedList<string>::Iterator itr=a.iterator();
 	while (itr.hasNext()) cout << ' ' << itr.next();
 	cout << "   empty = " ;
 	if (a.isEmpty())
@@ -21,7 +21,7 @@ void print(ArrayList<string> a)
 	 cout << "no" << endl;
 	
 	cout << "Operator= <G&S>       ";
-	ArrayList<string> b=a;
+	LinkedList<string> b=a;
 	for (int i=0; i<b.size(); ++i)
 	 cout << ' ' << b.get(i);
 	cout << endl;
@@ -35,8 +35,8 @@ void print(ArrayList<string> a)
 	else
 	 cout << "no" << endl;
 	
-	cout << "Copy-constructor <G&S>       ";
-	ArrayList<string> c(a);
+	cout << "Operator= <G&S>       ";
+	LinkedList<string> c(a);
 	for (int i=0; i<c.size(); ++i)
 	 cout << ' ' << c.get(i);
 	cout << endl;
@@ -50,6 +50,7 @@ void print(ArrayList<string> a)
 	else
 	 cout << "no" << endl;
 	
+	cout << "Get First:  " << a.getFirst() << "\nGet Last:   " << a.getLast() << endl;
 }
 
 int main()
@@ -60,18 +61,29 @@ int main()
 	char ch;
 	string x;
 	long y,z;
-	ArrayList<string> a,b;
-	ArrayList<string>::Iterator itr = a.iterator();
+	LinkedList<string> a;
+	LinkedList<string>::Iterator itr = a.iterator();
 	while (1)
 	{
 	try
 	 {
+	 	cout << endl;
 	 	cin >> command;
 	 	if (command == "add")
 	 	 {
 	 	 	cin >> x;
 	 	 	a.add(x);
 	 	 	
+	 	 }
+	 	else if (command=="addfirst")
+	 	 {
+	 	 	cin >> x;
+	 	 	a.addFirst(x);
+	 	 }
+	 	else if (command=="addlast")
+	 	 {
+	 	 	cin >> x;
+	 	 	a.addLast(x);
 	 	 }
 	 	else if (command=="addindex")
 	 	 {
@@ -93,6 +105,10 @@ int main()
 	 	 	cin >> y ;
 	 	 	a.removeIndex(y);
 	 	 }
+	 	else if (command=="removefirst")
+	 	 a.removeFirst();
+	 	else if (command=="removelast")
+	 	 a.removeLast();
 	 	else if (command=="remove")
 	 	 {
 	 	 	cin >> x ;
@@ -112,13 +128,13 @@ int main()
 	 	 cout << (itr.next()) << endl;
 	 	else if (command=="removeitr")
 	 	 itr.remove();
-		else if (command=="print")
-		 print(a);
-		else 
-	 	 break;
+	 	else if (command=="print")	
+	 	 print(a);
+		else
+		 break;
 	  }
-	 catch (IndexOutOfBound error) { cout << "IndexOutOfBound" << endl; }
-	 catch (ElementNotExist error) { cout << "ElementNotExist" << endl; }
+	 catch (IndexOutOfBound error) { cout << error.getMessage() << endl; }
+	 catch (ElementNotExist error) { cout << error.getMessage() << endl; }
 	}
 	
 	return 0;

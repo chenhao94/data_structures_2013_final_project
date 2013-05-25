@@ -6,7 +6,7 @@
 #define m 10000
 using namespace std;
 
-char cmd[15][15]={"add","remove","contains","addindex","set","removeindex"};
+char cmd[15][15]={"add","addfirst","addlast","remove","contains","addindex","set","removeindex","removefirst","removelast"};
 char s[100][10];
 long size=0;
 
@@ -53,16 +53,10 @@ int main()
 	 n=50;
 	for (int i=1; i<=m; ++i)
 	{
-		if (rand()%2==0)
-		 x=0;
-		else if (rand()%2==0)
-		 x=3;
-		else
-		 x=rand()%8;
 		if (rand()%1000==0)
 		 {
-			 size=0;
-			 cout << "clear\nprint" << endl;
+			size=0;
+			cout << "clear\nprint" << endl;
 			if (rand()%3==0)
 			 n=10;
 			else if (rand()%2)
@@ -71,22 +65,34 @@ int main()
 			 n=50;
 			continue;
 		 }
-		if (x==7)
+		if (rand()%3==0)
+		 x=0;
+		else if (rand()%3==0)
+		 x=1;
+		else if (rand()%3==0)
+		 x=2;
+		else if (rand()%3==0)
+		 x=5;
+		else
+		 x=rand()%11;
+		if (x==10)
 		 randItrOp();
-		else if (x<3)
-		 {
-			 cout << cmd[x] << " " << s[rand()%n] << endl;
-			 if (x==0)
-			  ++size;
-		 }
 		else if (x<5)
 		 {
-			 cout << cmd[x] << " " << rand()%(size+1) << " " << s[rand()%n] << endl;
-			 if (x==3)
+			 cout << cmd[x] << " " << s[rand()%n] << endl;
+			 if (x<3)
 			  ++size;
 		 }
-		else if (x==5)
+		else if (x<7)
+		 {
+			 cout << cmd[x] << " " << rand()%(size+1) << " " << s[rand()%n] << endl;
+			 if (x==5)
+			  ++size;
+		 }
+		else if (x==7)
 		 cout << cmd[x] << " " << rand()%(size+1) << endl;
+		else
+		 cout << cmd[x] << endl;
 
 		cout << "print" << endl;
 
