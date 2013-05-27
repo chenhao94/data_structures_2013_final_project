@@ -45,7 +45,7 @@ class AVLNode
 	public:
 	
 	/** Construct a new node. */
-	AVLNode(const T& dat) : data(dat), height(1), Size(1), l(NULL), r(NULL), f(NULL) {}
+	AVLNode(const T& dat, int h=1, int s=1) : data(dat), height(h), Size(s), l(NULL), r(NULL), f(NULL) {}
 	
 	/** Destructor */
 	virtual ~AVLNode() {}
@@ -598,7 +598,7 @@ AVLNode<T>* copyTree(AVLNode<T>* root)
 {
 	if (root==NULL)
 	 return NULL;
-	AVLNode<T>* newNode = new AVLNode<T>(root->data);
+	AVLNode<T>* newNode = new AVLNode<T>(root->data,root->height,root->Size);
 	if (newNode==NULL) throw AllocationFailure("The operation 'new' is failed.");
 	AVLNode<T>* l=copyTree(root->l), *r=copyTree(root->r);
 	newNode->l = l;

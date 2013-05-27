@@ -268,6 +268,8 @@ inline HashMap<K,V,H>::HashMap(): Size(0), capacity(initialSize)
 template <class K, class V, class H>
 inline HashMap<K,V,H>& HashMap<K,V,H>::operator=(const HashMap &x)
 {
+	if (this==&x)
+	 return *this;
 	delete[] storage;
 	capacity=x.capacity;
    	Size=x.Size;
@@ -380,7 +382,7 @@ inline void HashMap<K,V,H>::remove(const K &key)
    	for (nowPos=pos; storage[nowPos].flag==true; nowPos=(nowPos+1)%capacity)
    	 if (storage[nowPos].key==key)
    	  break;
-   	if (storage[nowPos].key!=key) throw ElementNotExist("The element you want to visit does not exsit.");
+   	if (storage[nowPos].flag==false || storage[nowPos].key!=key) throw ElementNotExist("The element you want to visit does not exsit.");
    	--Size;
    	storage[pos].flag=false;
    	for (nowPos=pos+1; storage[nowPos].flag==true; nowPos=(nowPos+1)%capacity)

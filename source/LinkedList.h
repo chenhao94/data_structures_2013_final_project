@@ -347,6 +347,8 @@ inline LinkedList<T>::LinkedList(const LinkedList<T> &c)
 template <class T>
 inline LinkedList<T>& LinkedList<T>::operator=(const LinkedList<T> &c)
 {
+	if (this==&c)
+	 return *this;
    	nodePointer cNow, cRear = c.rear, thisNow = head, thisLast;
    	clear();
    	

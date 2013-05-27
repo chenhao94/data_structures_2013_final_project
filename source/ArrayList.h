@@ -251,6 +251,8 @@ inline ArrayList<T>::ArrayList(): length(0), capacity(initialSize)
 template <class T>
 inline ArrayList<T>& ArrayList<T>::operator=(const ArrayList<T>& x)
 {
+	if (this==&x)
+	 return *this;
    	delete []data;
    	capacity=x.capacity;
    	length=x.length;

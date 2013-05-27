@@ -1,5 +1,5 @@
 #include <iostream>
-#include <cstdio> 
+#include <cstdio>
 #include <string>
 #include "LinkedList.h"
 using namespace std;
@@ -10,7 +10,7 @@ void print(LinkedList<string> a)
 	for (int i=0; i<a.size(); ++i)
 	 cout << ' ' << a.get(i);
 	cout << endl;
-	
+
 	cout << "Iterator:             ";
 	LinkedList<string>::Iterator itr=a.iterator();
 	while (itr.hasNext()) cout << ' ' << itr.next();
@@ -19,13 +19,13 @@ void print(LinkedList<string> a)
 	 cout << "yes" << endl;
 	else
 	 cout << "no" << endl;
-	
+
 	cout << "Operator= <G&S>       ";
 	LinkedList<string> b=a;
 	for (int i=0; i<b.size(); ++i)
 	 cout << ' ' << b.get(i);
 	cout << endl;
-	
+
 	cout << "Operator= <ITR>       ";
 	itr=b.iterator();
 	while (itr.hasNext()) cout << ' ' << itr.next();
@@ -34,13 +34,13 @@ void print(LinkedList<string> a)
 	 cout << "yes" << endl;
 	else
 	 cout << "no" << endl;
-	
+
 	cout << "Operator= <G&S>       ";
 	LinkedList<string> c(a);
 	for (int i=0; i<c.size(); ++i)
 	 cout << ' ' << c.get(i);
 	cout << endl;
-	
+
 	cout << "Copy-constructor <ITR>";
 	itr=c.iterator();
 	while (itr.hasNext()) cout << ' ' << itr.next();
@@ -49,7 +49,7 @@ void print(LinkedList<string> a)
 	 cout << "yes" << endl;
 	else
 	 cout << "no" << endl;
-	
+
 	cout << "Get First:  " << a.getFirst() << "\nGet Last:   " << a.getLast() << endl;
 }
 
@@ -73,7 +73,7 @@ int main()
 	 	 {
 	 	 	cin >> x;
 	 	 	a.add(x);
-	 	 	
+
 	 	 }
 	 	else if (command=="addfirst")
 	 	 {
@@ -128,15 +128,15 @@ int main()
 	 	 cout << (itr.next()) << endl;
 	 	else if (command=="removeitr")
 	 	 itr.remove();
-	 	else if (command=="print")	
+	 	else if (command=="print")
 	 	 print(a);
 		else
 		 break;
 	  }
-	 catch (IndexOutOfBound error) { cout << error.getMessage() << endl; }
-	 catch (ElementNotExist error) { cout << error.getMessage() << endl; }
+	 catch (IndexOutOfBound error) { cout << "IndexOutOfBound" << endl; }
+	 catch (ElementNotExist error) { cout << "ElementNotExist" << endl; }
 	}
-	
+
 	return 0;
 }
 

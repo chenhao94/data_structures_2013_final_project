@@ -71,13 +71,14 @@ public:
     /**
      * TODO Destructor
      */
-    virtual ~TreeMap() { }
+    virtual ~TreeMap() {delete tree; }
 
     /**
      * TODO Assignment operator
      * @throw AllocationFailure
      */
-    TreeMap &operator=(const TreeMap &x) { tree->clear(); tree->getRoot() = copyTree<Entry>(x.tree->getRoot()); }
+    TreeMap &operator=(const TreeMap &x) { if (this==&x) return *this;
+		tree->clear(); tree->getRoot() = copyTree<Entry>(x.tree->getRoot()); }
 
     /**
      * TODO Copy-constructor
@@ -114,7 +115,7 @@ public:
      * If the key is not present in this map, this function should throw ElementNotExist exception.
      * @throw ElementNotExist
      */
-    const V &get(const K &key) const { Entry ent(key); return tree->find(ent)->get().value; }
+    const V &get(const K &key) const;
 
     /**
      * TODO Returns true if this map contains no key-value mappings.
@@ -186,6 +187,21 @@ bool TreeMap<K,V>::findValue(AVLNode<TreeMap<K,V>::Entry>* root, V v) const
 	if (root->get().value==v)
 	 return true;
 	return (findValue(root->getL(),v) || (findValue(root->getR(),v)));
+}
+
+/**
+ * TODO Returns a const reference to the value to which the specified key is mapped.
+ * If the key is not present in this map, this function should throw ElementNotExist exception.
+ * @throw ElementNotExist
+ */
+template<class K,class V>
+const V& TreeMap<K,V>::get(const K &key) const 
+{
+	Entry ent(key);
+	AVLNode<Entry>* tmp = tree->find(ent);
+	if (tmp==NULL)
+	 throw ElementNotExist("The element you want to visit does not exist.");
+	return tmp->get().value; 
 }
 
 #endif

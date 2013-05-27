@@ -1,5 +1,5 @@
 #include <iostream>
-#include <cstdio> 
+#include <cstdio>
 #include <string>
 #include "ArrayList.h"
 using namespace std;
@@ -10,7 +10,7 @@ void print(ArrayList<string> a)
 	for (int i=0; i<a.size(); ++i)
 	 cout << ' ' << a.get(i);
 	cout << endl;
-	
+
 	cout << "Iterator:             ";
 	ArrayList<string>::Iterator itr=a.iterator();
 	while (itr.hasNext()) cout << ' ' << itr.next();
@@ -19,13 +19,13 @@ void print(ArrayList<string> a)
 	 cout << "yes" << endl;
 	else
 	 cout << "no" << endl;
-	
+
 	cout << "Operator= <G&S>       ";
 	ArrayList<string> b=a;
 	for (int i=0; i<b.size(); ++i)
 	 cout << ' ' << b.get(i);
 	cout << endl;
-	
+
 	cout << "Operator= <ITR>       ";
 	itr=b.iterator();
 	while (itr.hasNext()) cout << ' ' << itr.next();
@@ -34,13 +34,13 @@ void print(ArrayList<string> a)
 	 cout << "yes" << endl;
 	else
 	 cout << "no" << endl;
-	
+
 	cout << "Copy-constructor <G&S>       ";
 	ArrayList<string> c(a);
 	for (int i=0; i<c.size(); ++i)
 	 cout << ' ' << c.get(i);
 	cout << endl;
-	
+
 	cout << "Copy-constructor <ITR>";
 	itr=c.iterator();
 	while (itr.hasNext()) cout << ' ' << itr.next();
@@ -49,13 +49,13 @@ void print(ArrayList<string> a)
 	 cout << "yes" << endl;
 	else
 	 cout << "no" << endl;
-	
+
 }
 
 int main()
 {
 	freopen("input.txt","r",stdin);
-	freopen("output.txt","w",stdout);
+ 	freopen("output.txt","w",stdout);
 	string command;
 	char ch;
 	string x;
@@ -71,7 +71,7 @@ int main()
 	 	 {
 	 	 	cin >> x;
 	 	 	a.add(x);
-	 	 	
+
 	 	 }
 	 	else if (command=="addindex")
 	 	 {
@@ -114,13 +114,13 @@ int main()
 	 	 itr.remove();
 		else if (command=="print")
 		 print(a);
-		else 
+		else
 	 	 break;
 	  }
 	 catch (IndexOutOfBound error) { cout << "IndexOutOfBound" << endl; }
 	 catch (ElementNotExist error) { cout << "ElementNotExist" << endl; }
 	}
-	
+
 	return 0;
 }
 
