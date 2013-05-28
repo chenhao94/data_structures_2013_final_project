@@ -78,7 +78,7 @@ public:
      * @throw AllocationFailure
      */
     TreeMap &operator=(const TreeMap &x) { if (this==&x) return *this;
-		tree->clear(); tree->getRoot() = copyTree<Entry>(x.tree->getRoot()); }
+		tree->clear(); tree->getRoot() = copyTree<Entry>(x.tree->getRoot()); return *this;}
 
     /**
      * TODO Copy-constructor

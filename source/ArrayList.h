@@ -260,6 +260,7 @@ inline ArrayList<T>& ArrayList<T>::operator=(const ArrayList<T>& x)
    	if (data == NULL) throw AllocationFailure("The operation 'new' is failed.");
    	for (int i=0 ; i<length ; ++i)
   	 data[i]=x.data[i];
+	return *this;
 }
 
 /**

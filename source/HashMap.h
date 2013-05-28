@@ -210,6 +210,8 @@ inline bool HashMap<K,V,H>::doubleSize()
    	 if (tmp[i].getFlag()==true)
    	  {
    	  	pos = hash.hashCode(tmp[i].key)%capacity;
+		if (pos<0)
+		 pos+=capacity;
    	  	for (; storage[pos].flag==true; pos=(pos+1)%capacity);
    	  	storage[pos]=tmp[i];
    	  }
@@ -277,6 +279,7 @@ inline HashMap<K,V,H>& HashMap<K,V,H>::operator=(const HashMap &x)
    	if (storage == NULL) throw AllocationFailure("The operation 'new' is failed.");
    	for (int i=0 ; i<capacity ; ++i)
   	 storage[i]=x.storage[i];
+	return *this;
 }
 
 /**
@@ -320,6 +323,8 @@ template <class K, class V, class H>
 inline bool HashMap<K,V,H>::containsKey(const K &key) const
 {
 	long pos = hash.hashCode(key)%capacity;
+	if (pos<0)
+	 pos+=capacity;
    	for (; storage[pos].flag==true ; pos=(pos+1)%capacity)
    	 if (storage[pos].key==key)
    	  return true;
@@ -347,6 +352,8 @@ template <class K, class V, class H>
 inline const V& HashMap<K,V,H>::get(const K &key) const
 {
 	long pos = hash.hashCode(key)%capacity;
+	if (pos<0)
+	 pos+=capacity;
    	for (; storage[pos].flag==true ; pos=(pos+1)%capacity)
    	 if (storage[pos].key==key)
    	  return storage[pos].value;
@@ -364,6 +371,8 @@ inline void HashMap<K,V,H>::put(const K &key, const V &value)
 	if (Size >= capacity/2 && doubleSize()==false) throw AllocationFailure("The operation 'new' is failed.");
 	try { remove(key); } catch (ElementNotExist error) {}
 	long pos = hash.hashCode(key)%capacity;
+	if (pos<0)
+	 pos+=capacity;
    	++Size;
 	for (; storage[pos].flag==true; pos=(pos+1)%capacity);
    	storage[pos]=element;
@@ -378,6 +387,8 @@ template <class K, class V, class H>
 inline void HashMap<K,V,H>::remove(const K &key)
 {
 	long pos = hash.hashCode(key)%capacity, nowPos;
+	if (pos<0)
+	 pos+=capacity;
 	int hashInt;
    	for (nowPos=pos; storage[nowPos].flag==true; nowPos=(nowPos+1)%capacity)
    	 if (storage[nowPos].key==key)
@@ -388,6 +399,8 @@ inline void HashMap<K,V,H>::remove(const K &key)
    	for (nowPos=pos+1; storage[nowPos].flag==true; nowPos=(nowPos+1)%capacity)
    	 {
    	 	hashInt = hash.hashCode(storage[nowPos].key)%capacity;
+		if (hashInt<0)
+		 hashInt+=capacity;
    	 	if (hashInt<=pos)
    	 	 {
    	 	 	storage[pos] = storage[nowPos];

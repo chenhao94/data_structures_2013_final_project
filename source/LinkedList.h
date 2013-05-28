@@ -397,8 +397,10 @@ inline LinkedList<T>::~LinkedList()
 template <class T>
 inline bool LinkedList<T>::add(const T& e) 
 {
-   	rear->prev->add(e); /** @throw AllocationFailure; */
+	try { rear->prev->add(e); /** @throw AllocationFailure; */ }
+	catch (AllocationFailure err) { return false; }
    	++Size;
+	return true;
 }
 
 /**
