@@ -351,6 +351,8 @@ inline LinkedList<T>& LinkedList<T>::operator=(const LinkedList<T> &c)
 	 return *this;
    	nodePointer cNow, cRear = c.rear, thisNow = head, thisLast;
    	clear();
+	if (c.Size==0)
+	 return *this;
    	
    	cNow = c.head->next;
    	thisNow = head;
@@ -368,7 +370,8 @@ inline LinkedList<T>& LinkedList<T>::operator=(const LinkedList<T> &c)
    	while (cNow!=cRear);
    	
    	thisNow->next = rear;
-   	Size = c.size();
+   	Size = c.Size;
+	return *this;
 }
 
 /**

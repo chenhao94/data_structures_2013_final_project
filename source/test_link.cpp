@@ -119,6 +119,7 @@ void print(LinkedList<Derived> a)
 
 	cout << "Operator= <G&S>       ";
 	b=a;
+	
 	for (int i=0; i<b.size(); ++i)
 	 cout << ' ' << b.get(i);
 	cout << endl;
@@ -132,8 +133,9 @@ void print(LinkedList<Derived> a)
 	else
 	 cout << "no" << endl;
 
-	cout << "Operator= <G&S>       ";
+	cout << "Copy-Constructor <G&S>";
 	LinkedList<Derived> c(a);
+	
 	for (int i=0; i<c.size(); ++i)
 	 cout << ' ' << c.get(i);
 	cout << endl;
