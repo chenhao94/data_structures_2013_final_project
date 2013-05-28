@@ -368,7 +368,7 @@ inline LinkedList<T>& LinkedList<T>::operator=(const LinkedList<T> &c)
    	while (cNow!=cRear);
    	
    	thisNow->next = rear;
-   	Size = c->size;
+   	Size = c.size();
 }
 
 /**
