@@ -1,18 +1,115 @@
 #include <iostream>
 #include <cstdio>
 #include <string>
+#include <cstring>
+#include <cstdlib>
+#include <cassert>
 #include "LinkedList.h"
 using namespace std;
 
-void print(LinkedList<string> a)
+struct DynamicPart{
+    DynamicPart(int x = 0):
+        num(x), ok(){ ++Balance; ok[0] = ok[1] = true; }
+    DynamicPart(const DynamicPart& rhs):num(rhs.num){ ++Balance; memcpy(ok, rhs.ok ,sizeof(bool) * 2); }
+    ~DynamicPart() { --Balance; }
+
+    int num;
+    bool ok[2];
+
+    static int Balance;
+};
+
+int DynamicPart::Balance = 0;
+
+struct BasePart{
+    string name;
+    BasePart():name(){ ++Balance; }
+    BasePart(const string& str):name(str){ ++Balance; }
+    BasePart(const BasePart& rhs):name(rhs.name){ ++Balance; }
+
+    virtual ~BasePart(){ --Balance; }
+
+    virtual ostream& PrintName(ostream& out){
+        return out << name;
+    }
+
+    static int Balance;
+};
+
+int BasePart::Balance = 0;
+
+struct Derived:public BasePart{
+    DynamicPart* dp;
+    double extended;
+    Derived():BasePart(), dp(new DynamicPart()), extended(){ ++Balance; }
+    Derived(const Derived& rhs):BasePart(rhs), dp(new DynamicPart(*(rhs.dp))), extended(rhs.extended){ ++Balance; }
+    Derived(const string& str):BasePart(str), dp(new DynamicPart()), extended(){ ++Balance; }
+
+    Derived& operator=(const Derived& rhs){
+        if (&rhs == this) return *this;
+        BasePart::operator=(rhs);
+        *dp = *(rhs.dp);
+        extended = rhs.extended;
+        return *this;
+    }
+
+    bool operator==(const Derived& rhs) const{
+        return  (extended == rhs.extended) &&
+                 (dp->num == rhs.dp->num) && (dp->ok[0] == rhs.dp->ok[0])
+                && (dp->ok[1] == rhs.dp->ok[1]);
+    }
+
+    ~Derived(){ --Balance; delete dp; }
+
+    static int Balance;
+};
+
+istream& operator>>(istream& in, Derived& d){
+    return in >> d.extended >> d.dp->num >> d.dp->ok[0] >> d.dp->ok[1];
+}
+
+ostream& operator<<(ostream& os, const Derived& d){
+    return os << d.name;
+}
+
+int Derived::Balance = 0;
+
+struct BalanceWatcher{
+    BalanceWatcher(){
+        checkBalanceZero();
+    }
+
+    static void checkBalanceZero(){
+        assert(DynamicPart::Balance == 0);
+        assert(BasePart::Balance == 0);
+        assert(Derived::Balance == 0);
+    }
+
+    static ostream& printBalance(ostream& out){
+        return out << "Balance status: DynamicPart == " << DynamicPart::Balance
+                   << " BasePart == " << BasePart::Balance
+                   << " Derived == " << Derived::Balance << endl;
+    }
+
+    ~BalanceWatcher(){
+        printBalance(cout);
+        checkBalanceZero();
+    }
+
+} globalBalanceWatcher;
+
+void print(LinkedList<Derived> a)
 {
+	LinkedList<Derived> b;
+	Derived value("");
+	b.add(value);
 	cout << "Get & Size:           ";
 	for (int i=0; i<a.size(); ++i)
 	 cout << ' ' << a.get(i);
 	cout << endl;
 
 	cout << "Iterator:             ";
-	LinkedList<string>::Iterator itr=a.iterator();
+	LinkedList<Derived>::Iterator itr=a.iterator();
 	while (itr.hasNext()) cout << ' ' << itr.next();
 	cout << "   empty = " ;
 	if (a.isEmpty())
@@ -21,7 +118,7 @@ void print(LinkedList<string> a)
 	 cout << "no" << endl;
 
 	cout << "Operator= <G&S>       ";
-	LinkedList<string> b=a;
+	b=a;
 	for (int i=0; i<b.size(); ++i)
 	 cout << ' ' << b.get(i);
 	cout << endl;
@@ -36,7 +133,7 @@ void print(LinkedList<string> a)
 	 cout << "no" << endl;
 
 	cout << "Operator= <G&S>       ";
-	LinkedList<string> c(a);
+	LinkedList<Derived> c(a);
 	for (int i=0; i<c.size(); ++i)
 	 cout << ' ' << c.get(i);
 	cout << endl;
@@ -61,8 +158,10 @@ int main()
 	char ch;
 	string x;
 	long y,z;
-	LinkedList<string> a;
-	LinkedList<string>::Iterator itr = a.iterator();
+	{
+	LinkedList<Derived> *a1 = new LinkedList<Derived>;
+	LinkedList<Derived> a = *a1;
+	LinkedList<Derived>::Iterator itr = a.iterator();
 	while (1)
 	{
 	try
@@ -136,7 +235,10 @@ int main()
 	 catch (IndexOutOfBound error) { cout << "IndexOutOfBound" << endl; }
 	 catch (ElementNotExist error) { cout << "ElementNotExist" << endl; }
 	}
-
+	delete a1;
+	}
+	//------check memory leak------
+	globalBalanceWatcher.checkBalanceZero();
 	return 0;
 }
 
