@@ -50,15 +50,16 @@ public:
     {
         K key;
         V value;
-        bool flag; // flag = true means that this is a valid element, otherwise means empty.
+        bool flag, del; // flag = true means that this is a valid element, otherwise means empty. del = true means that the element has been deleted.
     public:
-        Entry() :flag(false){}
+        Entry() :flag(false), del(false){}
     
         Entry(K k, V v)
         {
             key = k;
             value = v;
-            flag=true;
+            flag = true;
+			del = false;
         }
 
         const K& getKey() const { return key; }
@@ -66,13 +67,15 @@ public:
         const V& getValue() const { return value; }
         
         bool getFlag() const { return flag; }
-        
+       
+		bool getDel() const { return del; }
+
         friend class HashMap<K,V,H>;
     };
 
 private:
 	static const int initialSize = 100;
-	long capacity, Size;
+	long capacity, Size, totDel;
 	Entry* storage;
 	static H hash;
 	
@@ -81,6 +84,12 @@ private:
      *  Returns false if fail to enlarge the size.
      */
     inline bool doubleSize();
+	
+	/**
+	 *	TODO Execute when there are too much "del" marks.
+	 *  @throw AllocationFailure
+	 */
+	inline void reHash();
 
 public:
     class Iterator
@@ -207,7 +216,7 @@ inline bool HashMap<K,V,H>::doubleSize()
    	catch (AllocationFailure error) { return false; }
 	
    	for (int i=0; i<oldCap ;++i)
-   	 if (tmp[i].getFlag()==true)
+   	 if (tmp[i].getFlag()==true && tmp[i].getDel()==false)
    	  {
    	  	pos = hash.hashCode(tmp[i].key)%capacity;
 		if (pos<0)
@@ -215,7 +224,7 @@ inline bool HashMap<K,V,H>::doubleSize()
    	  	for (; storage[pos].flag==true; pos=(pos+1)%capacity);
    	  	storage[pos]=tmp[i];
    	  }
-   	
+	totDel = 0;
    	delete []tmp;
    	return true;
 }
@@ -229,7 +238,7 @@ inline bool HashMap<K,V,H>::Iterator::hasNext()
 	long cap = list->capacity;
 	HashMap<K,V,H>::Entry *tmp = list->storage;
 	for (long i=pos+1; i<cap; ++i)
-	 if (tmp[i].getFlag()==true)
+	 if (tmp[i].getFlag()==true && tmp[i].getDel()==false)
 	  return true;
 	return false;
 }
@@ -244,7 +253,7 @@ inline const typename HashMap<K,V,H>::Entry& HashMap<K,V,H>::Iterator::next()
 	long cap = list->capacity;
 	HashMap<K,V,H>::Entry *tmp = list->storage;
 	for (long i=pos+1; i<cap; ++i)
-	 if (tmp[i].getFlag()==true)
+	 if (tmp[i].getFlag()==true && tmp[i].getDel()==false)
 	  {
 	  	pos=i;
 	  	return tmp[i];
@@ -257,7 +266,7 @@ inline const typename HashMap<K,V,H>::Entry& HashMap<K,V,H>::Iterator::next()
  * @throw AllocationFailure
  */
 template <class K, class V, class H>
-inline HashMap<K,V,H>::HashMap(): Size(0), capacity(initialSize) 
+inline HashMap<K,V,H>::HashMap(): Size(0), capacity(initialSize), totDel(0) 
 {
 	storage = new HashMap<K,V,H>::Entry[initialSize];
    	if (storage == NULL) throw AllocationFailure("The operation 'new' is failed.");
@@ -274,11 +283,13 @@ inline HashMap<K,V,H>& HashMap<K,V,H>::operator=(const HashMap &x)
 	 return *this;
 	delete[] storage;
 	capacity=x.capacity;
-   	Size=x.Size;
+   	Size=0;
+	totDel = 0;
    	storage = new HashMap<K,V,H>::Entry[capacity];
    	if (storage == NULL) throw AllocationFailure("The operation 'new' is failed.");
-   	for (int i=0 ; i<capacity ; ++i)
-  	 storage[i]=x.storage[i];
+	for (int i=0; i<capacity; ++i)
+	 if (x.storage[i].getFlag()==true && x.storage[i].getDel()==false)
+	  this->put(x.storage[i].getKey(), x.storage[i].getValue());
 	return *this;
 }
 
@@ -287,12 +298,13 @@ inline HashMap<K,V,H>& HashMap<K,V,H>::operator=(const HashMap &x)
  * @throw AllocationFailure
  */
 template <class K, class V, class H>
-inline HashMap<K,V,H>::HashMap(const HashMap &x): capacity(x.capacity), Size(x.Size)
+inline HashMap<K,V,H>::HashMap(const HashMap &x): capacity(x.capacity), Size(0), totDel(0)
 {
    	storage = new HashMap<K,V,H>::Entry[capacity];
    	if (storage == NULL) throw AllocationFailure("The operation 'new' is failed.");
-   	for (int i=0 ; i<capacity ; ++i)
-   	 storage[i]=x.storage[i];
+	for (int i=0; i<capacity; ++i)
+	 if (x.storage[i].getFlag()==true && x.storage[i].getDel()==false)
+	  this->put(x.storage[i].getKey(), x.storage[i].getValue());
 }
 
 /**
@@ -311,9 +323,9 @@ inline class HashMap<K,V,H>::Iterator HashMap<K,V,H>::iterator() const
 template <class K, class V, class H>
 inline void HashMap<K,V,H>::clear()
 {
-	Size=0;
+	Size = totDel = 0;
 	for (int i=0; i<capacity; ++i)
-	 storage[i].flag=false;
+	 storage[i].flag = storage[i].del = false;
 }
 
 /**
@@ -326,7 +338,7 @@ inline bool HashMap<K,V,H>::containsKey(const K &key) const
 	if (pos<0)
 	 pos+=capacity;
    	for (; storage[pos].flag==true ; pos=(pos+1)%capacity)
-   	 if (storage[pos].key==key)
+   	 if (storage[pos].del==false && storage[pos].key==key)
    	  return true;
    	return false;
 }
@@ -338,7 +350,7 @@ template <class K, class V, class H>
 inline bool HashMap<K,V,H>::containsValue(const V &value) const
 {
 	for (long i=0; i<capacity; ++i)
-   	 if (storage[i].flag==true && storage[i].value==value)
+   	 if (storage[i].flag==true && storage[i].del==false && storage[i].value==value)
    	  return true;
    	return false;
 }
@@ -355,7 +367,7 @@ inline const V& HashMap<K,V,H>::get(const K &key) const
 	if (pos<0)
 	 pos+=capacity;
    	for (; storage[pos].flag==true ; pos=(pos+1)%capacity)
-   	 if (storage[pos].key==key)
+   	 if (storage[pos].del==false && storage[pos].key==key)
    	  return storage[pos].value;
    	throw ElementNotExist("The element you want to visit does not exsit.");
 }
@@ -368,13 +380,15 @@ template <class K, class V, class H>
 inline void HashMap<K,V,H>::put(const K &key, const V &value)
 {
 	HashMap<K,V,H>::Entry element(key,value);
-	if (Size >= capacity/2 && doubleSize()==false) throw AllocationFailure("The operation 'new' is failed.");
+	if (Size + totDel >= capacity/2 && doubleSize()==false) throw AllocationFailure("The operation 'new' is failed.");
 	try { remove(key); } catch (ElementNotExist error) {}
 	long pos = hash.hashCode(key)%capacity;
 	if (pos<0)
 	 pos+=capacity;
    	++Size;
-	for (; storage[pos].flag==true; pos=(pos+1)%capacity);
+	for (; storage[pos].flag==true || storage[pos].del==true; pos=(pos+1)%capacity);
+	if (storage[pos].del==true)
+	 --totDel;
    	storage[pos]=element;
 }
 
@@ -391,23 +405,48 @@ inline void HashMap<K,V,H>::remove(const K &key)
 	 pos+=capacity;
 	int hashInt;
    	for (nowPos=pos; storage[nowPos].flag==true; nowPos=(nowPos+1)%capacity)
-   	 if (storage[nowPos].key==key)
+   	 if (storage[nowPos].del==false && storage[nowPos].key==key)
    	  break;
    	if (storage[nowPos].flag==false || storage[nowPos].key!=key) throw ElementNotExist("The element you want to visit does not exsit.");
    	--Size;
-   	storage[pos].flag=false;
-   	for (nowPos=pos+1; storage[nowPos].flag==true; nowPos=(nowPos+1)%capacity)
+	storage[nowPos].del = true;
+	++totDel;
+	if (totDel>=Size)
+	 reHash();
+}
+
+/**
+ *	TODO Execute when there are too much "del" marks.
+ *	@throw AllocationFailure
+ */
+template <class K, class V, class H>
+inline void HashMap<K,V,H>::reHash()
+{
+   	HashMap<K,V,H>::Entry *tmp = storage;
+   	long pos;
+   	
+   	try
    	 {
-   	 	hashInt = hash.hashCode(storage[nowPos].key)%capacity;
-		if (hashInt<0)
-		 hashInt+=capacity;
-   	 	if (hashInt<=pos)
-   	 	 {
-   	 	 	storage[pos] = storage[nowPos];
-   	 	 	storage[nowPos].flag = false;
-   	 	 	pos = nowPos;
-   	 	 }
+   		storage = new HashMap<K,V,H>::Entry[capacity];
+   		if (storage == NULL)
+   		 {
+   		 	storage = tmp;
+   		 	throw AllocationFailure("The operation 'new' is failed.");
+   		 }
    	 }
+   	catch (AllocationFailure error) { return; }
+	
+   	for (int i=0; i<capacity ;++i)
+   	 if (tmp[i].getFlag()==true && tmp[i].getDel()==false)
+   	  {
+   	  	pos = hash.hashCode(tmp[i].key)%capacity;
+		if (pos<0)
+		 pos+=capacity;
+   	  	for (; storage[pos].flag==true; pos=(pos+1)%capacity);
+   	  	storage[pos]=tmp[i];
+   	  }
+	totDel = 0;
+   	delete []tmp;
 }
 
 #endif
