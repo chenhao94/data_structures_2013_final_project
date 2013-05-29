@@ -74,7 +74,9 @@ public:
     };
 
 private:
-	static const int initialSize = 100;
+	const static int prime[11];
+	static const int initialSize = 103;
+	long _p;
 	long capacity, Size, totDel;
 	Entry* storage;
 	static H hash;
@@ -83,7 +85,7 @@ private:
      *	TODO Double the capacity of the container.
      *  Returns false if fail to enlarge the size.
      */
-    inline bool doubleSize();
+    inline bool reSize();
 	
 	/**
 	 *	TODO Execute when there are too much "del" marks.
@@ -190,6 +192,8 @@ public:
      */
     int size() const { return Size; }
 };
+template<class K, class V, class H>
+const int HashMap<K,V,H>::prime[11]={103, 457, 1619, 6701, 25931, 110623, 575777, 2099941, 16769023, 39916801, 100000007};
 
 //-------------The end of the class-----------------------------------
 
@@ -198,11 +202,12 @@ public:
   *	Returns false if fail to enlarge the size.
   */
 template <class K, class V, class H>
-inline bool HashMap<K,V,H>::doubleSize()
+inline bool HashMap<K,V,H>::reSize()
 {
    	HashMap<K,V,H>::Entry *tmp = storage;
    	long oldCap = capacity, pos;
-   	capacity *= 2;
+	++_p;
+   	capacity = prime[_p];
    	
    	try
    	 {
@@ -266,7 +271,7 @@ inline const typename HashMap<K,V,H>::Entry& HashMap<K,V,H>::Iterator::next()
  * @throw AllocationFailure
  */
 template <class K, class V, class H>
-inline HashMap<K,V,H>::HashMap(): Size(0), capacity(initialSize), totDel(0) 
+inline HashMap<K,V,H>::HashMap(): _p(0), Size(0), capacity(initialSize), totDel(0) 
 {
 	storage = new HashMap<K,V,H>::Entry[initialSize];
    	if (storage == NULL) throw AllocationFailure("The operation 'new' is failed.");
@@ -283,13 +288,12 @@ inline HashMap<K,V,H>& HashMap<K,V,H>::operator=(const HashMap &x)
 	 return *this;
 	delete[] storage;
 	capacity=x.capacity;
-   	Size=0;
-	totDel = 0;
+   	Size=x.Size;
+	totDel = x.totDel;
    	storage = new HashMap<K,V,H>::Entry[capacity];
    	if (storage == NULL) throw AllocationFailure("The operation 'new' is failed.");
 	for (int i=0; i<capacity; ++i)
-	 if (x.storage[i].getFlag()==true && x.storage[i].getDel()==false)
-	  this->put(x.storage[i].getKey(), x.storage[i].getValue());
+	 storage[i]=x.storage[i];
 	return *this;
 }
 
@@ -298,13 +302,12 @@ inline HashMap<K,V,H>& HashMap<K,V,H>::operator=(const HashMap &x)
  * @throw AllocationFailure
  */
 template <class K, class V, class H>
-inline HashMap<K,V,H>::HashMap(const HashMap &x): capacity(x.capacity), Size(0), totDel(0)
+inline HashMap<K,V,H>::HashMap(const HashMap &x): _p(x._p), capacity(x.capacity), Size(x.Size), totDel(x.totDel)
 {
    	storage = new HashMap<K,V,H>::Entry[capacity];
    	if (storage == NULL) throw AllocationFailure("The operation 'new' is failed.");
 	for (int i=0; i<capacity; ++i)
-	 if (x.storage[i].getFlag()==true && x.storage[i].getDel()==false)
-	  this->put(x.storage[i].getKey(), x.storage[i].getValue());
+	 storage[i]=x.storage[i];
 }
 
 /**
@@ -380,7 +383,7 @@ template <class K, class V, class H>
 inline void HashMap<K,V,H>::put(const K &key, const V &value)
 {
 	HashMap<K,V,H>::Entry element(key,value);
-	if (Size + totDel >= capacity/2 && doubleSize()==false) throw AllocationFailure("The operation 'new' is failed.");
+	if (Size + totDel >= capacity/2 && reSize()==false) throw AllocationFailure("The operation 'new' is failed.");
 	try { remove(key); } catch (ElementNotExist error) {}
 	long pos = hash.hashCode(key)%capacity;
 	if (pos<0)
