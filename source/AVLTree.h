@@ -30,8 +30,6 @@ inline int getHeight(AVLNode<T>* root);
 template <class T>
 inline void maintainHeight(AVLNode<T>* root);
 
-
-
 template<class T>	// Type 'T' need opertors '<' and '=='
 class AVLNode
 {
@@ -113,6 +111,7 @@ class AVLNode
 	friend AVLNode<T>* copyTree<T>(AVLNode<T>*);
 	friend int getHeight<T>(AVLNode<T>* root);
 	friend void maintainHeight<T>(AVLNode<T>* root);
+
 };
 
 //-------------The end of AVLNode-----------------------------------
@@ -186,7 +185,7 @@ inline void maintainHeight(AVLNode<T>* root)
 
 /**
  *	Return a pointer of the previous node
- *	@throw ElementNotExist
+ *	If it is the first one, return NULL
  */
 template <class T>
 typename AVLNode<T>::const_AVLNodePointer AVLNode<T>::prev() const
@@ -205,12 +204,12 @@ typename AVLNode<T>::const_AVLNodePointer AVLNode<T>::prev() const
 	 	thisNow = thisFather;
 	 	thisFather = thisFather->f;
 	 }
-	throw ElementNotExist("The element is the least in the map.");
+	return NULL;
 }
 
 /**
  *	Return a pointer of the next node
- *	@throw ElementNotExist
+ *	If it is the last one, return NULL
  */
 template <class T>
 typename AVLNode<T>::const_AVLNodePointer AVLNode<T>::next() const
@@ -229,7 +228,7 @@ typename AVLNode<T>::const_AVLNodePointer AVLNode<T>::next() const
 	 	thisNow = thisFather;
 	 	thisFather = thisFather->f;
 	 }
-	throw ElementNotExist("The element is the largest in the map.");
+	return NULL;
 }
 
 /**	Return the 1st pointer of the subtree */
@@ -451,6 +450,7 @@ void AVLTree<T>::removeAll(AVLNode<T>* node)
 template <class T>
 void AVLTree<T>::add( const T& elem )
 {
+	long t=clock();
 	AVLNode<T>* newNode = new AVLNode<T>(elem);
 	AVLNode<T>* pos = root;
 	int diff, heightTmp;
@@ -473,7 +473,7 @@ void AVLTree<T>::add( const T& elem )
 	 	 	 }
 	 	 	pos=pos->l;
 	 	 }
-	 	else
+	 	else if (pos->data<elem)
 	 	 {
 	 	 	if (pos->r==NULL)
 	 	 	 {
@@ -483,6 +483,17 @@ void AVLTree<T>::add( const T& elem )
 	 	 	 }
 	 	 	pos=pos->r;
 	 	 }
+		else
+		 {
+			 pos->data=elem;
+			 while (pos!=NULL)
+			  {
+				  --pos->Size;
+				  pos=pos->f;
+			  }
+			 delete newNode;
+			 return;
+		 }
 	 }
 	while (pos!=NULL)
 	 {
@@ -509,6 +520,7 @@ void AVLTree<T>::add( const T& elem )
 template <class T>
 void AVLTree<T>::remove( const T& elem )
 {
+	long t=clock();
 	AVLNode<T>* node = find(elem);
 	AVLNode<T>* pos;
 	bool stop = false;

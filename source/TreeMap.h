@@ -47,6 +47,7 @@ public:
     const AVLNode<Entry>* pos; //	when pos==NULL, it means the next element pointed by iterator is the first in the map.
     
     public:
+
     	/** Construct a new iterator */
     	Iterator(const AVLTree<Entry>* t=NULL): tree(t), pos(NULL) {}
     
@@ -126,8 +127,7 @@ public:
      * TODO Associates the specified value with the specified key in this map.
      * @throw AllocationFailure
      */
-    void put(const K &key, const V &value) { try { remove(key); } catch (ElementNotExist error) {}
-	 Entry ent(key,value); tree->add(ent); }
+    void put(const K &key, const V &value) { Entry ent(key,value); tree->add(ent); }
 
     /**
      * TODO Removes the mapping for the specified key from this map if present.
@@ -152,12 +152,9 @@ inline bool TreeMap<K,V>::Iterator::hasNext()
    	 return false;
    	if (pos==NULL)
    	 return true;
-    try
-     {
-     	pos->next();
-     	return true;
-     }
-    catch (ElementNotExist error) { return false; }
+    if( pos->next()!=NULL)
+     return true;
+	return false;
 }
 
 /**

@@ -209,24 +209,20 @@ inline bool HashMap<K,V,H>::reSize()
 	++_p;
    	capacity = prime[_p];
    	
-   	try
-   	 {
-   		storage = new HashMap<K,V,H>::Entry[capacity];
-   		if (storage == NULL)
-   		 {
-   		 	storage = tmp;
-   		 	throw AllocationFailure("The operation 'new' is failed.");
-   		 }
+	storage = new HashMap<K,V,H>::Entry[capacity];
+	if (storage == NULL)
+	 {
+		storage = tmp;
+   		return false;
    	 }
-   	catch (AllocationFailure error) { return false; }
 	
    	for (int i=0; i<oldCap ;++i)
-   	 if (tmp[i].getFlag()==true && tmp[i].getDel()==false)
+   	 if (tmp[i].flag==true && tmp[i].del==false)
    	  {
    	  	pos = hash.hashCode(tmp[i].key)%capacity;
 		if (pos<0)
 		 pos+=capacity;
-   	  	for (; storage[pos].flag==true; pos=(pos+1)%capacity);
+   	  	for (int j=1; storage[pos].flag==true; ++j, pos=(pos+2*j-1)%capacity);
    	  	storage[pos]=tmp[i];
    	  }
 	totDel = 0;
@@ -337,12 +333,13 @@ inline void HashMap<K,V,H>::clear()
 template <class K, class V, class H>
 inline bool HashMap<K,V,H>::containsKey(const K &key) const
 {
+	long tmp=clock();
 	long pos = hash.hashCode(key)%capacity;
 	if (pos<0)
 	 pos+=capacity;
-   	for (; storage[pos].flag==true ; pos=(pos+1)%capacity)
+   	for (int i=1; storage[pos].flag==true ; ++i, pos=(pos+2*i-1)%capacity)
    	 if (storage[pos].del==false && storage[pos].key==key)
-   	  return true;
+	  return true;
    	return false;
 }
 
@@ -369,7 +366,7 @@ inline const V& HashMap<K,V,H>::get(const K &key) const
 	long pos = hash.hashCode(key)%capacity;
 	if (pos<0)
 	 pos+=capacity;
-   	for (; storage[pos].flag==true ; pos=(pos+1)%capacity)
+   	for (int i=1; storage[pos].flag==true ; ++i, pos=(pos+2*i-1)%capacity)
    	 if (storage[pos].del==false && storage[pos].key==key)
    	  return storage[pos].value;
    	throw ElementNotExist("The element you want to visit does not exsit.");
@@ -384,12 +381,20 @@ inline void HashMap<K,V,H>::put(const K &key, const V &value)
 {
 	HashMap<K,V,H>::Entry element(key,value);
 	if (Size + totDel >= capacity/2 && reSize()==false) throw AllocationFailure("The operation 'new' is failed.");
-	try { remove(key); } catch (ElementNotExist error) {}
-	long pos = hash.hashCode(key)%capacity;
+	long pos = hash.hashCode(key)%capacity, tmpPos;
 	if (pos<0)
 	 pos+=capacity;
+	tmpPos=pos;
+
+   	for (int i=1; storage[pos].flag==true ; ++i, pos=(pos+2*i-1)%capacity)
+	 if (storage[pos].del==false && storage[pos].key==key)
+	  {
+		  storage[pos].value = value;
+		  return;
+	  }
+
    	++Size;
-	for (; storage[pos].flag==true || storage[pos].del==true; pos=(pos+1)%capacity);
+	for (int i=1; storage[pos].flag==true && storage[pos].del==false; ++i, pos=(pos+2*i-1)%capacity);
 	if (storage[pos].del==true)
 	 --totDel;
    	storage[pos]=element;
@@ -407,7 +412,8 @@ inline void HashMap<K,V,H>::remove(const K &key)
 	if (pos<0)
 	 pos+=capacity;
 	int hashInt;
-   	for (nowPos=pos; storage[nowPos].flag==true; nowPos=(nowPos+1)%capacity)
+	nowPos = pos;
+   	for (int i=1; storage[nowPos].flag==true; ++i, nowPos=(nowPos+2*i-1)%capacity)
    	 if (storage[nowPos].del==false && storage[nowPos].key==key)
    	  break;
    	if (storage[nowPos].flag==false || storage[nowPos].key!=key) throw ElementNotExist("The element you want to visit does not exsit.");
@@ -428,16 +434,12 @@ inline void HashMap<K,V,H>::reHash()
    	HashMap<K,V,H>::Entry *tmp = storage;
    	long pos;
    	
-   	try
-   	 {
-   		storage = new HashMap<K,V,H>::Entry[capacity];
-   		if (storage == NULL)
-   		 {
-   		 	storage = tmp;
-   		 	throw AllocationFailure("The operation 'new' is failed.");
-   		 }
+	storage = new HashMap<K,V,H>::Entry[capacity];
+	if (storage == NULL)
+	 {
+		storage = tmp;
+		return;
    	 }
-   	catch (AllocationFailure error) { return; }
 	
    	for (int i=0; i<capacity ;++i)
    	 if (tmp[i].getFlag()==true && tmp[i].getDel()==false)
@@ -445,7 +447,7 @@ inline void HashMap<K,V,H>::reHash()
    	  	pos = hash.hashCode(tmp[i].key)%capacity;
 		if (pos<0)
 		 pos+=capacity;
-   	  	for (; storage[pos].flag==true; pos=(pos+1)%capacity);
+   	  	for (int j=1; storage[pos].flag==true; ++j, pos=(pos+2*j-1)%capacity);
    	  	storage[pos]=tmp[i];
    	  }
 	totDel = 0;
