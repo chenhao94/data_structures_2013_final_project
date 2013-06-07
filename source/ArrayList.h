@@ -176,16 +176,12 @@ inline bool ArrayList<T>::doubleSize()
    	T *tmp = data;
    	capacity *= 2;
    	
-   	try
-   	 {
-   		data = new T[capacity];
-   		if (data == NULL)
-   		 {
-   		 	data = tmp;
-   		 	throw AllocationFailure("The operation 'new' is failed.");
-   		 }
-   	 }
-   	catch (AllocationFailure error) { return false; }
+	data = new T[capacity];
+	if (data == NULL)
+	 {
+		data = tmp;
+		return false;
+	 }
 	
    	for (int i=0 ; i<length ;++i)
    	 data[i] = tmp[i];

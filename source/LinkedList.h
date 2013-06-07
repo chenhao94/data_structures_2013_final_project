@@ -42,10 +42,10 @@ private:
 	
 		/**
 		 *	Appends the specified element to the next of this node.
-		 *  @throw AllocationFailure
+		 *  return false if fail to add it into the list
 		 *  @throw ElementNotExist if this is a rear pointer of the list
 		 */
-		inline void add(const T& elem);
+		inline bool add(const T& elem);
 	 };
 	
 	int Size;
@@ -123,7 +123,6 @@ public:
     /**
      * TODO Appends the specified element to the end of this list.
      * Return false if failed to add it into the list.
-     * @throw AllocationFailure
      */
     inline bool add(const T& e);
 
@@ -244,17 +243,18 @@ inline void LinkedList<T>::node::remove()
 
 /**
  *	Appends the specified element to the next of this node.
- *  @throw AllocationFailure
+ *  return false if fail to add it into the list
  *  @throw ElementNotExist if this is a rear pointer of the list
  */
 template <class T>
-inline void LinkedList<T>::node::add(const T& elem)
+inline bool LinkedList<T>::node::add(const T& elem)
 {
 	if ( next == NULL )
  	 throw ElementNotExist("The element you want to visit does not exsit.");
 	nodePointer newNode = new node(elem, this, this->next);
-	if (newNode==NULL) throw AllocationFailure("The operation 'new' is failed.");
+	if (newNode==NULL) return false;
 	newNode->next->prev = this->next = newNode;
+	return true;
 }
 
 /**
@@ -392,13 +392,12 @@ inline LinkedList<T>::~LinkedList()
 /**
   * Appends the specified element to the end of this list.
   * Return false if failed to add it into the list.
-  * @throw AllocationFailure
   */
 template <class T>
 inline bool LinkedList<T>::add(const T& e) 
 {
-	try { rear->prev->add(e); /** @throw AllocationFailure; */ }
-	catch (AllocationFailure err) { return false; }
+	if ( rear->prev->add(e) == false)
+	 return false;
    	++Size;
 	return true;
 }
